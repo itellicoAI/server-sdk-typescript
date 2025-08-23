@@ -1,0 +1,1 @@
+# itellicoai-typescript
