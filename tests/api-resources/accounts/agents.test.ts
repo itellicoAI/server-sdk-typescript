@@ -11,9 +11,9 @@ describe('resource agents', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.accounts.agents.create('account_id', {
-      model: { model: 'gpt-4o-mini-2024-07-18', provider: 'openai' },
+      model: { model: 'gpt-5-mini', provider: 'azure_openai' },
       transcriber: { provider: 'deepgram' },
-      voice: { voice_id: 'nova', provider: 'openai' },
+      voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -27,95 +27,38 @@ describe('resource agents', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.agents.create('account_id', {
-      model: {
-        model: 'gpt-4o-mini-2024-07-18',
-        max_tokens: 50,
-        messages: [
-          {
-            content: 'You are a helpful customer support agent. Be friendly and professional.',
-            role: 'system',
-          },
-        ],
-        provider: 'openai',
-        temperature: 0,
+      model: { model: 'gpt-5-mini', max_tokens: 1024, provider: 'azure_openai', temperature: 0.7 },
+      transcriber: { keywords: ['string'], language: 'multi', model: 'nova-3:general', provider: 'deepgram' },
+      voice: {
+        voice_id: 'pMsXgVXv3BLzUgSXRplE',
+        provider: 'elevenlabs',
+        settings: {
+          optimize_streaming_latency: 0,
+          similarity_boost: 0.7,
+          speed: 0.7,
+          stability: 0.7,
+          style: 0,
+          use_speaker_boost: true,
+        },
       },
-      transcriber: {
-        keyterm: ['string'],
-        keywords: ['string'],
-        language: 'bg',
-        model: 'nova-3',
-        provider: 'deepgram',
+      ambient_sound: { source: 'open_plan_office', volume: 0 },
+      capture_settings: { recording_enabled: true },
+      denoising: { telephony: true, web: true },
+      inactivity_settings: {
+        end_call_timeout_ms: 10000,
+        reminder_max_count: 0,
+        reminder_timeout_ms: 5000,
+        reset_on_activity: true,
       },
-      voice: { voice_id: 'nova', instructions: 'instructions', provider: 'openai', speed: 0.25 },
-      ambient_sound: { type: 'open_plan_office', volume: -1 },
-      check_in: { max_count: 0, timeout_ms: 5000 },
-      initial_message: {
-        delay_ms: 500,
-        interruptions_enabled: false,
-        message: 'Hello! Thank you for calling. How can I assist you today?',
-        mode: 'fixed_message',
-      },
+      initial_message: { delay_ms: 0, interruptible: true, message: 'message', mode: 'fixed_message' },
       interrupt_settings: { enabled: true, min_speech_seconds: 0, min_words: 0 },
       max_duration_seconds: 10,
+      metadata: { foo: 'bar' },
       name: 'Customer Support Agent',
       note: 'note',
-      pronunciation_dictionary: [{ replacement: 'replacement', target: 'target' }],
       response_timing: { min_endpointing_delay_seconds: 0 },
       tags: ['string'],
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.accounts.agents.retrieve('agent_uuid', { account_id: 'account_id' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.accounts.agents.retrieve('agent_uuid', { account_id: 'account_id' });
-  });
-
-  // Prism tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.accounts.agents.update('agent_uuid', { account_id: 'account_id' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.accounts.agents.update('agent_uuid', {
-      account_id: 'account_id',
-      ambient_sound: { type: 'open_plan_office', volume: -1 },
-      check_in: { max_count: 0, timeout_ms: 5000 },
-      initial_message: {
-        delay_ms: 500,
-        interruptions_enabled: false,
-        message: 'Hello! Thank you for calling. How can I assist you today?',
-        mode: 'fixed_message',
-      },
-      interrupt_settings: { enabled: true, min_speech_seconds: 0, min_words: 0 },
-      max_duration_seconds: 10,
-      model: { foo: 'bar' },
-      name: 'name',
-      note: 'note',
-      pronunciation_dictionary: [{ replacement: 'replacement', target: 'target' }],
-      response_timing: { min_endpointing_delay_seconds: 0 },
-      tags: ['string'],
-      transcriber: { language: 'af-ZA', provider: 'azure' },
-      voice: { foo: 'bar' },
+      volume: { allow_adjustment: true, telephony: 0, web: 0 },
     });
   });
 
@@ -138,40 +81,22 @@ describe('resource agents', () => {
       client.accounts.agents.list(
         'account_id',
         {
-          created_ge: 'created_ge',
-          created_gt: 'created_gt',
-          created_le: 'created_le',
-          created_lt: 'created_lt',
+          created_ge: '2019-12-27T18:11:19.117Z',
+          created_gt: '2019-12-27T18:11:19.117Z',
+          created_le: '2019-12-27T18:11:19.117Z',
+          created_lt: '2019-12-27T18:11:19.117Z',
+          is_archived: true,
           limit: 1,
-          modified_ge: 'modified_ge',
-          modified_gt: 'modified_gt',
-          modified_le: 'modified_le',
-          modified_lt: 'modified_lt',
+          modified_ge: '2019-12-27T18:11:19.117Z',
+          modified_gt: '2019-12-27T18:11:19.117Z',
+          modified_le: '2019-12-27T18:11:19.117Z',
+          modified_lt: '2019-12-27T18:11:19.117Z',
           name: 'name',
           offset: 0,
-          ordering: 'ordering',
-          search: 'search',
           tags: ['string'],
         },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Itellicoai.NotFoundError);
-  });
-
-  // Prism tests are disabled
-  test.skip('delete: only required params', async () => {
-    const responsePromise = client.accounts.agents.delete('agent_uuid', { account_id: 'account_id' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('delete: required and optional params', async () => {
-    const response = await client.accounts.agents.delete('agent_uuid', { account_id: 'account_id' });
   });
 });
