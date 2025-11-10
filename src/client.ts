@@ -136,7 +136,7 @@ export class Itellicoai {
    * API Client for interfacing with the Itellicoai API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['ITELLICOAI_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['ITELLICOAI_BASE_URL'] ?? https://api.itellico.ai/v1] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['ITELLICOAI_BASE_URL'] ?? https://api.itellico.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -158,7 +158,7 @@ export class Itellicoai {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://api.itellico.ai/v1`,
+      baseURL: baseURL || `https://api.itellico.ai`,
     };
 
     this.baseURL = options.baseURL!;
@@ -204,7 +204,7 @@ export class Itellicoai {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://api.itellico.ai/v1';
+    return this.baseURL !== 'https://api.itellico.ai';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
