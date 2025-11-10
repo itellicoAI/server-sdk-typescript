@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -32,6 +33,43 @@ export class Agents extends APIResource {
   }
 
   /**
+   * Retrieve detailed information about a specific agent.
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.accounts.agents.retrieve(
+   *   'agent_id',
+   *   { account_id: 'account_id' },
+   * );
+   * ```
+   */
+  retrieve(
+    agentID: string,
+    params: AgentRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<AgentResponse> {
+    const { account_id } = params;
+    return this._client.get(path`/v1/accounts/${account_id}/agents/${agentID}`, options);
+  }
+
+  /**
+   * Update an existing agent with partial data. Only fields provided in the request
+   * will be updated.
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.accounts.agents.update(
+   *   'agent_id',
+   *   { account_id: 'account_id' },
+   * );
+   * ```
+   */
+  update(agentID: string, params: AgentUpdateParams, options?: RequestOptions): APIPromise<AgentResponse> {
+    const { account_id, ...body } = params;
+    return this._client.patch(path`/v1/accounts/${account_id}/agents/${agentID}`, { body, ...options });
+  }
+
+  /**
    * Paginated list of AI agents for the specified account with filtering, searching,
    * and sorting capabilities.
    *
@@ -48,6 +86,25 @@ export class Agents extends APIResource {
     options?: RequestOptions,
   ): APIPromise<AgentListResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/agents`, { query, ...options });
+  }
+
+  /**
+   * Soft-delete an agent by marking it archived. Use list filters to view archived
+   * agents and unarchive via PATCH.
+   *
+   * @example
+   * ```ts
+   * await client.accounts.agents.archive('agent_id', {
+   *   account_id: 'account_id',
+   * });
+   * ```
+   */
+  archive(agentID: string, params: AgentArchiveParams, options?: RequestOptions): APIPromise<void> {
+    const { account_id } = params;
+    return this._client.delete(path`/v1/accounts/${account_id}/agents/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -74,7 +131,7 @@ export interface AgentResponse {
   /**
    * Configuration for handling user inactivity and silence during conversations.
    */
-  inactivity_settings: AgentResponse.InactivitySettings;
+  inactivity_settings: InactivitySettings;
 
   /**
    * Configuration for the agent's initial message when starting a conversation.
@@ -95,7 +152,7 @@ export interface AgentResponse {
   /**
    * Agent capture settings configuration.
    */
-  capture_settings?: AgentResponse.CaptureSettings | null;
+  capture_settings?: CaptureSettings | null;
 
   /**
    * Date-time of when the agent was created (ISO 8601 on output).
@@ -105,7 +162,7 @@ export interface AgentResponse {
   /**
    * Agent denoising/noise cancellation settings for enhanced audio quality.
    */
-  denoising?: AgentResponse.Denoising | null;
+  denoising?: Denoising | null;
 
   /**
    * Configuration for how the agent handles user interruptions during conversation
@@ -156,92 +213,7 @@ export interface AgentResponse {
   /**
    * Agent volume settings for audio output control.
    */
-  volume?: AgentResponse.Volume | null;
-}
-
-export namespace AgentResponse {
-  /**
-   * Configuration for handling user inactivity and silence during conversations.
-   */
-  export interface InactivitySettings {
-    /**
-     * Time in milliseconds of user inactivity before ending the call. Only used when
-     * reminders are disabled (reminder_timeout_ms is null). Set to null to never
-     * auto-end calls. Minimum 10000ms (10 seconds), maximum 600000ms (10 minutes).
-     */
-    end_call_timeout_ms?: number | null;
-
-    /**
-     * Maximum number of reminder messages to send when reminders are enabled. Only
-     * used when reminder_timeout_ms is set.
-     */
-    reminder_max_count?: number;
-
-    /**
-     * Time in milliseconds to wait before sending a reminder when user is silent. Only
-     * used when reminder_max_count > 0. Minimum 5000ms (5 seconds), maximum 300000ms
-     * (5 minutes).
-     */
-    reminder_timeout_ms?: number | null;
-
-    /**
-     * Whether to reset the reminder count when the user becomes active again. When
-     * true (default), the counter resets after user activity. When false, reminders
-     * are cumulative throughout the conversation.
-     */
-    reset_on_activity?: boolean;
-  }
-
-  /**
-   * Agent capture settings configuration.
-   */
-  export interface CaptureSettings {
-    /**
-     * Whether to record the agent's calls. Set to false to disable recording.
-     */
-    recording_enabled?: boolean | null;
-  }
-
-  /**
-   * Agent denoising/noise cancellation settings for enhanced audio quality.
-   */
-  export interface Denoising {
-    /**
-     * Enable enhanced noise cancellation for telephony/SIP calls with optimized phone
-     * audio processing powered by Krisp.
-     */
-    telephony?: boolean;
-
-    /**
-     * Enable enhanced noise cancellation for web-based calls powered by Krisp
-     * technology.
-     */
-    web?: boolean;
-  }
-
-  /**
-   * Agent volume settings for audio output control.
-   */
-  export interface Volume {
-    /**
-     * Whether to allow users to adjust volume through voice commands (e.g., 'speak
-     * louder', 'speak quieter'). When enabled, adds volume control as an available
-     * tool for the agent.
-     */
-    allow_adjustment?: boolean;
-
-    /**
-     * Volume level for telephony/SIP calls. Range [0.0, 1.0] where 0.0 is muted, 0.5
-     * is normal volume, and 1.0 is maximum volume.
-     */
-    telephony?: number;
-
-    /**
-     * Volume level for web-based calls. Range [0.0, 1.0] where 0.0 is muted, 0.5 is
-     * normal volume, and 1.0 is maximum volume.
-     */
-    web?: number;
-  }
+  volume?: Volume | null;
 }
 
 /**
@@ -268,26 +240,305 @@ export interface AmbientSound {
 }
 
 /**
- * Anthropic-specific model configuration.
+ * Azure-specific transcriber configuration.
  */
-export interface AnthropicModel {
+export interface AzureTranscriber {
   /**
-   * The Anthropic model to use.
+   * Language for transcription (see Azure Speech Service docs for supported
+   * languages)
    */
-  model: 'claude-sonnet-4-20250514' | 'claude-3-7-sonnet-20250219' | 'claude-3-5-haiku-20241022';
+  language?:
+    | 'af-ZA'
+    | 'am-ET'
+    | 'ar-AE'
+    | 'ar-BH'
+    | 'ar-DZ'
+    | 'ar-EG'
+    | 'ar-IL'
+    | 'ar-IQ'
+    | 'ar-JO'
+    | 'ar-KW'
+    | 'ar-LB'
+    | 'ar-LY'
+    | 'ar-MA'
+    | 'ar-OM'
+    | 'ar-PS'
+    | 'ar-QA'
+    | 'ar-SA'
+    | 'ar-SY'
+    | 'ar-TN'
+    | 'ar-YE'
+    | 'az-AZ'
+    | 'bg-BG'
+    | 'bn-IN'
+    | 'bs-BA'
+    | 'ca-ES'
+    | 'cs-CZ'
+    | 'cy-GB'
+    | 'da-DK'
+    | 'de-AT'
+    | 'de-CH'
+    | 'de-DE'
+    | 'el-GR'
+    | 'en-AU'
+    | 'en-CA'
+    | 'en-GB'
+    | 'en-GH'
+    | 'en-HK'
+    | 'en-IE'
+    | 'en-IN'
+    | 'en-KE'
+    | 'en-NG'
+    | 'en-NZ'
+    | 'en-PH'
+    | 'en-SG'
+    | 'en-TZ'
+    | 'en-US'
+    | 'en-ZA'
+    | 'es-AR'
+    | 'es-BO'
+    | 'es-CL'
+    | 'es-CO'
+    | 'es-CR'
+    | 'es-CU'
+    | 'es-DO'
+    | 'es-EC'
+    | 'es-ES'
+    | 'es-GQ'
+    | 'es-GT'
+    | 'es-HN'
+    | 'es-MX'
+    | 'es-NI'
+    | 'es-PA'
+    | 'es-PE'
+    | 'es-PR'
+    | 'es-PY'
+    | 'es-SV'
+    | 'es-US'
+    | 'es-UY'
+    | 'es-VE'
+    | 'et-EE'
+    | 'eu-ES'
+    | 'fa-IR'
+    | 'fi-FI'
+    | 'fil-PH'
+    | 'fr-BE'
+    | 'fr-CA'
+    | 'fr-CH'
+    | 'fr-FR'
+    | 'ga-IE'
+    | 'gl-ES'
+    | 'gu-IN'
+    | 'he-IL'
+    | 'hi-IN'
+    | 'hr-HR'
+    | 'hu-HU'
+    | 'hy-AM'
+    | 'id-ID'
+    | 'is-IS'
+    | 'it-CH'
+    | 'it-IT'
+    | 'ja-JP'
+    | 'jv-ID'
+    | 'ka-GE'
+    | 'kk-KZ'
+    | 'km-KH'
+    | 'kn-IN'
+    | 'ko-KR'
+    | 'lo-LA'
+    | 'lt-LT'
+    | 'lv-LV'
+    | 'mk-MK'
+    | 'ml-IN'
+    | 'mn-MN'
+    | 'mr-IN'
+    | 'ms-MY'
+    | 'mt-MT'
+    | 'my-MM'
+    | 'nb-NO'
+    | 'ne-NP'
+    | 'nl-BE'
+    | 'nl-NL'
+    | 'pa-IN'
+    | 'pl-PL'
+    | 'ps-AF'
+    | 'pt-BR'
+    | 'pt-PT'
+    | 'ro-RO'
+    | 'ru-RU'
+    | 'si-LK'
+    | 'sk-SK'
+    | 'sl-SI'
+    | 'so-SO'
+    | 'sq-AL'
+    | 'sr-RS'
+    | 'sv-SE'
+    | 'sw-KE'
+    | 'sw-TZ'
+    | 'ta-IN'
+    | 'te-IN'
+    | 'th-TH'
+    | 'tr-TR'
+    | 'uk-UA'
+    | 'ur-IN'
+    | 'uz-UZ'
+    | 'vi-VN'
+    | 'wuu-CN'
+    | 'yue-CN'
+    | 'zh-CN'
+    | 'zh-CN-shandong'
+    | 'zh-CN-sichuan'
+    | 'zh-HK'
+    | 'zh-TW'
+    | 'zu-ZA'
+    | null;
+
+  provider?: 'azure';
+}
+
+/**
+ * Agent capture settings configuration.
+ */
+export interface CaptureSettings {
+  /**
+   * Whether to record the agent's calls. Set to false to disable recording.
+   */
+  recording_enabled?: boolean | null;
+}
+
+/**
+ * Deepgram-specific transcriber configuration.
+ */
+export interface DeepgramTranscriber {
+  /**
+   * Keywords to help model pick up use-case specific words
+   */
+  keywords?: Array<string> | null;
 
   /**
-   * Max number of tokens the agent will be allowed to generate in each turn. Default
-   * is 250.
+   * Language for transcription (see Deepgram docs for supported languages)
    */
-  max_tokens?: number | null;
-
-  provider?: 'anthropic';
+  language?:
+    | 'bg'
+    | 'ca'
+    | 'cs'
+    | 'da'
+    | 'da-DK'
+    | 'de'
+    | 'de-CH'
+    | 'el'
+    | 'en'
+    | 'en-AU'
+    | 'en-GB'
+    | 'en-IN'
+    | 'en-NZ'
+    | 'en-US'
+    | 'es'
+    | 'es-419'
+    | 'es-LATAM'
+    | 'et'
+    | 'fi'
+    | 'fr'
+    | 'fr-CA'
+    | 'hi'
+    | 'hi-Latn'
+    | 'hu'
+    | 'id'
+    | 'it'
+    | 'ja'
+    | 'ko'
+    | 'ko-KR'
+    | 'lt'
+    | 'lv'
+    | 'ms'
+    | 'multi'
+    | 'nl'
+    | 'nl-BE'
+    | 'no'
+    | 'pl'
+    | 'pt'
+    | 'pt-BR'
+    | 'ro'
+    | 'ru'
+    | 'sk'
+    | 'sv'
+    | 'sv-SE'
+    | 'ta'
+    | 'taq'
+    | 'th'
+    | 'th-TH'
+    | 'tr'
+    | 'uk'
+    | 'vi'
+    | 'zh'
+    | 'zh-CN'
+    | 'zh-Hans'
+    | 'zh-Hant'
+    | 'zh-TW'
+    | null;
 
   /**
-   * Temperature for the model. Default is 0 to leverage caching for lower latency.
+   * Deepgram model to use (matches our YAML configuration)
    */
-  temperature?: number | null;
+  model?:
+    | 'nova-3:general'
+    | 'nova-3:medical'
+    | 'nova-2:general'
+    | 'nova-2:phonecall'
+    | 'nova-2:meeting'
+    | 'nova-2:conversationalai'
+    | null;
+
+  provider?: 'deepgram';
+}
+
+/**
+ * Agent denoising/noise cancellation settings for enhanced audio quality.
+ */
+export interface Denoising {
+  /**
+   * Enable enhanced noise cancellation for telephony/SIP calls with optimized phone
+   * audio processing powered by Krisp.
+   */
+  telephony?: boolean;
+
+  /**
+   * Enable enhanced noise cancellation for web-based calls powered by Krisp
+   * technology.
+   */
+  web?: boolean;
+}
+
+/**
+ * Configuration for handling user inactivity during conversations
+ */
+export interface InactivitySettings {
+  /**
+   * Time in milliseconds of user inactivity before ending the call. Only used when
+   * reminders are disabled (reminder_timeout_ms is null). Set to null to never
+   * auto-end calls. Minimum 10000ms (10 seconds), maximum 600000ms (10 minutes).
+   */
+  end_call_timeout_ms?: number | null;
+
+  /**
+   * Maximum number of reminder messages to send when reminders are enabled. Only
+   * used when reminder_timeout_ms is set.
+   */
+  reminder_max_count?: number;
+
+  /**
+   * Time in milliseconds to wait before sending a reminder when user is silent. Only
+   * used when reminder_max_count > 0. Minimum 5000ms (5 seconds), maximum 300000ms
+   * (5 minutes).
+   */
+  reminder_timeout_ms?: number | null;
+
+  /**
+   * Whether to reset the reminder count when the user becomes active again. When
+   * true (default), the counter resets after user activity. When false, reminders
+   * are cumulative throughout the conversation.
+   */
+  reset_on_activity?: boolean;
 }
 
 /**
@@ -346,37 +597,6 @@ export interface InterruptSettings {
 }
 
 /**
- * OpenAI-specific model configuration.
- */
-export interface OpenAIModel {
-  /**
-   * The OpenAI model to use.
-   */
-  model:
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-4.1-nano'
-    | 'gpt-4o'
-    | 'gpt-4o-mini';
-
-  /**
-   * Max number of tokens the agent will be allowed to generate in each turn. Default
-   * is 250.
-   */
-  max_tokens?: number | null;
-
-  provider?: 'openai';
-
-  /**
-   * Temperature for the model. Default is 0 to leverage caching for lower latency.
-   */
-  temperature?: number | null;
-}
-
-/**
  * Configuration for agent response timing and conversation flow control
  */
 export interface ResponseTiming {
@@ -386,6 +606,30 @@ export interface ResponseTiming {
    * in speech. Default is 0.1 seconds.
    */
   min_endpointing_delay_seconds?: number;
+}
+
+/**
+ * Agent volume settings for audio output control.
+ */
+export interface Volume {
+  /**
+   * Whether to allow users to adjust volume through voice commands (e.g., 'speak
+   * louder', 'speak quieter'). When enabled, adds volume control as an available
+   * tool for the agent.
+   */
+  allow_adjustment?: boolean;
+
+  /**
+   * Volume level for telephony/SIP calls. Range [0.0, 1.0] where 0.0 is muted, 0.5
+   * is normal volume, and 1.0 is maximum volume.
+   */
+  telephony?: number;
+
+  /**
+   * Volume level for web-based calls. Range [0.0, 1.0] where 0.0 is muted, 0.5 is
+   * normal volume, and 1.0 is maximum volume.
+   */
+  web?: number;
 }
 
 export interface AgentListResponse {
@@ -399,13 +643,16 @@ export interface AgentCreateParams {
    * Model configuration for the agent. Defines which AI model to use (OpenAI GPT-4,
    * Anthropic Claude, etc.) and its parameters like temperature and max tokens.
    */
-  model: OpenAIModel | AgentCreateParams.AzureOpenAIModelSchema | AnthropicModel;
+  model:
+    | AgentCreateParams.OpenAIModelSchema
+    | AgentCreateParams.AzureOpenAIModelSchema
+    | AgentCreateParams.AnthropicModelSchema;
 
   /**
    * Transcriber (speech-to-text) configuration for the agent. Defines which
    * transcriber provider to use (Azure, Deepgram) and language settings.
    */
-  transcriber: AgentCreateParams.AzureTranscriberSchema | AgentCreateParams.DeepgramTranscriberSchema;
+  transcriber: AzureTranscriber | DeepgramTranscriber;
 
   /**
    * Voice (text-to-speech) configuration for the agent. Defines which provider and
@@ -424,17 +671,17 @@ export interface AgentCreateParams {
   /**
    * Agent capture settings configuration.
    */
-  capture_settings?: AgentCreateParams.CaptureSettings | null;
+  capture_settings?: CaptureSettings | null;
 
   /**
    * Agent denoising/noise cancellation settings for enhanced audio quality.
    */
-  denoising?: AgentCreateParams.Denoising | null;
+  denoising?: Denoising | null;
 
   /**
    * Configuration for handling user inactivity during conversations
    */
-  inactivity_settings?: AgentCreateParams.InactivitySettings;
+  inactivity_settings?: InactivitySettings;
 
   /**
    * Configuration for the agent's initial message when starting a conversation
@@ -487,10 +734,41 @@ export interface AgentCreateParams {
   /**
    * Agent volume settings for audio output control.
    */
-  volume?: AgentCreateParams.Volume | null;
+  volume?: Volume | null;
 }
 
 export namespace AgentCreateParams {
+  /**
+   * OpenAI-specific model configuration.
+   */
+  export interface OpenAIModelSchema {
+    /**
+     * The OpenAI model to use.
+     */
+    model:
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
+      | 'gpt-4.1'
+      | 'gpt-4.1-mini'
+      | 'gpt-4.1-nano'
+      | 'gpt-4o'
+      | 'gpt-4o-mini';
+
+    /**
+     * Max number of tokens the agent will be allowed to generate in each turn. Default
+     * is 250.
+     */
+    max_tokens?: number | null;
+
+    provider?: 'openai';
+
+    /**
+     * Temperature for the model. Default is 0 to leverage caching for lower latency.
+     */
+    temperature?: number | null;
+  }
+
   /**
    * Azure OpenAI-specific model configuration.
    */
@@ -522,246 +800,26 @@ export namespace AgentCreateParams {
   }
 
   /**
-   * Azure-specific transcriber configuration.
+   * Anthropic-specific model configuration.
    */
-  export interface AzureTranscriberSchema {
+  export interface AnthropicModelSchema {
     /**
-     * Language for transcription (see Azure Speech Service docs for supported
-     * languages)
+     * The Anthropic model to use.
      */
-    language?:
-      | 'af-ZA'
-      | 'am-ET'
-      | 'ar-AE'
-      | 'ar-BH'
-      | 'ar-DZ'
-      | 'ar-EG'
-      | 'ar-IL'
-      | 'ar-IQ'
-      | 'ar-JO'
-      | 'ar-KW'
-      | 'ar-LB'
-      | 'ar-LY'
-      | 'ar-MA'
-      | 'ar-OM'
-      | 'ar-PS'
-      | 'ar-QA'
-      | 'ar-SA'
-      | 'ar-SY'
-      | 'ar-TN'
-      | 'ar-YE'
-      | 'az-AZ'
-      | 'bg-BG'
-      | 'bn-IN'
-      | 'bs-BA'
-      | 'ca-ES'
-      | 'cs-CZ'
-      | 'cy-GB'
-      | 'da-DK'
-      | 'de-AT'
-      | 'de-CH'
-      | 'de-DE'
-      | 'el-GR'
-      | 'en-AU'
-      | 'en-CA'
-      | 'en-GB'
-      | 'en-GH'
-      | 'en-HK'
-      | 'en-IE'
-      | 'en-IN'
-      | 'en-KE'
-      | 'en-NG'
-      | 'en-NZ'
-      | 'en-PH'
-      | 'en-SG'
-      | 'en-TZ'
-      | 'en-US'
-      | 'en-ZA'
-      | 'es-AR'
-      | 'es-BO'
-      | 'es-CL'
-      | 'es-CO'
-      | 'es-CR'
-      | 'es-CU'
-      | 'es-DO'
-      | 'es-EC'
-      | 'es-ES'
-      | 'es-GQ'
-      | 'es-GT'
-      | 'es-HN'
-      | 'es-MX'
-      | 'es-NI'
-      | 'es-PA'
-      | 'es-PE'
-      | 'es-PR'
-      | 'es-PY'
-      | 'es-SV'
-      | 'es-US'
-      | 'es-UY'
-      | 'es-VE'
-      | 'et-EE'
-      | 'eu-ES'
-      | 'fa-IR'
-      | 'fi-FI'
-      | 'fil-PH'
-      | 'fr-BE'
-      | 'fr-CA'
-      | 'fr-CH'
-      | 'fr-FR'
-      | 'ga-IE'
-      | 'gl-ES'
-      | 'gu-IN'
-      | 'he-IL'
-      | 'hi-IN'
-      | 'hr-HR'
-      | 'hu-HU'
-      | 'hy-AM'
-      | 'id-ID'
-      | 'is-IS'
-      | 'it-CH'
-      | 'it-IT'
-      | 'ja-JP'
-      | 'jv-ID'
-      | 'ka-GE'
-      | 'kk-KZ'
-      | 'km-KH'
-      | 'kn-IN'
-      | 'ko-KR'
-      | 'lo-LA'
-      | 'lt-LT'
-      | 'lv-LV'
-      | 'mk-MK'
-      | 'ml-IN'
-      | 'mn-MN'
-      | 'mr-IN'
-      | 'ms-MY'
-      | 'mt-MT'
-      | 'my-MM'
-      | 'nb-NO'
-      | 'ne-NP'
-      | 'nl-BE'
-      | 'nl-NL'
-      | 'pa-IN'
-      | 'pl-PL'
-      | 'ps-AF'
-      | 'pt-BR'
-      | 'pt-PT'
-      | 'ro-RO'
-      | 'ru-RU'
-      | 'si-LK'
-      | 'sk-SK'
-      | 'sl-SI'
-      | 'so-SO'
-      | 'sq-AL'
-      | 'sr-RS'
-      | 'sv-SE'
-      | 'sw-KE'
-      | 'sw-TZ'
-      | 'ta-IN'
-      | 'te-IN'
-      | 'th-TH'
-      | 'tr-TR'
-      | 'uk-UA'
-      | 'ur-IN'
-      | 'uz-UZ'
-      | 'vi-VN'
-      | 'wuu-CN'
-      | 'yue-CN'
-      | 'zh-CN'
-      | 'zh-CN-shandong'
-      | 'zh-CN-sichuan'
-      | 'zh-HK'
-      | 'zh-TW'
-      | 'zu-ZA'
-      | null;
-
-    provider?: 'azure';
-  }
-
-  /**
-   * Deepgram-specific transcriber configuration.
-   */
-  export interface DeepgramTranscriberSchema {
-    /**
-     * Keywords to help model pick up use-case specific words
-     */
-    keywords?: Array<string> | null;
+    model: 'claude-sonnet-4-20250514' | 'claude-3-7-sonnet-20250219' | 'claude-3-5-haiku-20241022';
 
     /**
-     * Language for transcription (see Deepgram docs for supported languages)
+     * Max number of tokens the agent will be allowed to generate in each turn. Default
+     * is 250.
      */
-    language?:
-      | 'bg'
-      | 'ca'
-      | 'cs'
-      | 'da'
-      | 'da-DK'
-      | 'de'
-      | 'de-CH'
-      | 'el'
-      | 'en'
-      | 'en-AU'
-      | 'en-GB'
-      | 'en-IN'
-      | 'en-NZ'
-      | 'en-US'
-      | 'es'
-      | 'es-419'
-      | 'es-LATAM'
-      | 'et'
-      | 'fi'
-      | 'fr'
-      | 'fr-CA'
-      | 'hi'
-      | 'hi-Latn'
-      | 'hu'
-      | 'id'
-      | 'it'
-      | 'ja'
-      | 'ko'
-      | 'ko-KR'
-      | 'lt'
-      | 'lv'
-      | 'ms'
-      | 'multi'
-      | 'nl'
-      | 'nl-BE'
-      | 'no'
-      | 'pl'
-      | 'pt'
-      | 'pt-BR'
-      | 'ro'
-      | 'ru'
-      | 'sk'
-      | 'sv'
-      | 'sv-SE'
-      | 'ta'
-      | 'taq'
-      | 'th'
-      | 'th-TH'
-      | 'tr'
-      | 'uk'
-      | 'vi'
-      | 'zh'
-      | 'zh-CN'
-      | 'zh-Hans'
-      | 'zh-Hant'
-      | 'zh-TW'
-      | null;
+    max_tokens?: number | null;
+
+    provider?: 'anthropic';
 
     /**
-     * Deepgram model to use (matches our YAML configuration)
+     * Temperature for the model. Default is 0 to leverage caching for lower latency.
      */
-    model?:
-      | 'nova-3:general'
-      | 'nova-3:medical'
-      | 'nova-2:general'
-      | 'nova-2:phonecall'
-      | 'nova-2:meeting'
-      | 'nova-2:conversationalai'
-      | null;
-
-    provider?: 'deepgram';
+    temperature?: number | null;
   }
 
   /**
@@ -862,89 +920,104 @@ export namespace AgentCreateParams {
       use_speaker_boost?: boolean | null;
     }
   }
+}
+
+export interface AgentRetrieveParams {
+  account_id: string;
+}
+
+export interface AgentUpdateParams {
+  /**
+   * Path param:
+   */
+  account_id: string;
 
   /**
-   * Agent capture settings configuration.
+   * Body param: Configuration for ambient background sounds during the conversation
    */
-  export interface CaptureSettings {
-    /**
-     * Whether to record the agent's calls. Set to false to disable recording.
-     */
-    recording_enabled?: boolean | null;
-  }
+  ambient_sound?: AmbientSound | null;
 
   /**
-   * Agent denoising/noise cancellation settings for enhanced audio quality.
+   * Body param: Agent capture settings configuration.
    */
-  export interface Denoising {
-    /**
-     * Enable enhanced noise cancellation for telephony/SIP calls with optimized phone
-     * audio processing powered by Krisp.
-     */
-    telephony?: boolean;
-
-    /**
-     * Enable enhanced noise cancellation for web-based calls powered by Krisp
-     * technology.
-     */
-    web?: boolean;
-  }
+  capture_settings?: CaptureSettings | null;
 
   /**
-   * Configuration for handling user inactivity during conversations
+   * Body param: Agent denoising/noise cancellation settings for enhanced audio
+   * quality.
    */
-  export interface InactivitySettings {
-    /**
-     * Time in milliseconds of user inactivity before ending the call. Only used when
-     * reminders are disabled (reminder_timeout_ms is null). Set to null to never
-     * auto-end calls. Minimum 10000ms (10 seconds), maximum 600000ms (10 minutes).
-     */
-    end_call_timeout_ms?: number | null;
-
-    /**
-     * Maximum number of reminder messages to send when reminders are enabled. Only
-     * used when reminder_timeout_ms is set.
-     */
-    reminder_max_count?: number;
-
-    /**
-     * Time in milliseconds to wait before sending a reminder when user is silent. Only
-     * used when reminder_max_count > 0. Minimum 5000ms (5 seconds), maximum 300000ms
-     * (5 minutes).
-     */
-    reminder_timeout_ms?: number | null;
-
-    /**
-     * Whether to reset the reminder count when the user becomes active again. When
-     * true (default), the counter resets after user activity. When false, reminders
-     * are cumulative throughout the conversation.
-     */
-    reset_on_activity?: boolean;
-  }
+  denoising?: Denoising | null;
 
   /**
-   * Agent volume settings for audio output control.
+   * Body param: Configuration for handling user inactivity during conversations
    */
-  export interface Volume {
-    /**
-     * Whether to allow users to adjust volume through voice commands (e.g., 'speak
-     * louder', 'speak quieter'). When enabled, adds volume control as an available
-     * tool for the agent.
-     */
-    allow_adjustment?: boolean;
+  inactivity_settings?: InactivitySettings | null;
 
-    /**
-     * Volume level for telephony/SIP calls. Range [0.0, 1.0] where 0.0 is muted, 0.5
-     * is normal volume, and 1.0 is maximum volume.
-     */
-    telephony?: number;
+  /**
+   * Body param: Configuration for the agent's initial message when starting a
+   * conversation
+   */
+  initial_message?: InitialMessage | null;
 
-    /**
-     * Volume level for web-based calls. Range [0.0, 1.0] where 0.0 is muted, 0.5 is
-     * normal volume, and 1.0 is maximum volume.
-     */
-    web?: number;
-  }
+  /**
+   * Body param: Configuration for how the agent handles user interruptions during
+   * conversation
+   */
+  interrupt_settings?: InterruptSettings | null;
+
+  /**
+   * Body param: Maximum allowed length for the conversation in seconds. Maximum is
+   * 7200 seconds (2 hours).
+   */
+  max_duration_seconds?: number | null;
+
+  /**
+   * Body param: Custom metadata for the agent. Store any additional key-value pairs
+   * that your application needs.
+   */
+  metadata?: { [key: string]: unknown } | null;
+
+  /**
+   * Body param: Language model configuration for the agent. Partial updates allowed.
+   */
+  model?: { [key: string]: unknown } | null;
+
+  /**
+   * Body param: The name of the agent. Only used for your own reference.
+   */
+  name?: string | null;
+
+  /**
+   * Body param: Internal notes about the agent.
+   */
+  note?: string | null;
+
+  /**
+   * Body param: Configuration for agent response timing and conversation flow
+   * control
+   */
+  response_timing?: ResponseTiming | null;
+
+  /**
+   * Body param: List of tags to categorize the agent.
+   */
+  tags?: Array<string> | null;
+
+  /**
+   * Body param: Transcriber (speech-to-text) configuration for the agent. Partial
+   * updates allowed.
+   */
+  transcriber?: AzureTranscriber | DeepgramTranscriber | null;
+
+  /**
+   * Body param: Text-to-speech configuration for the agent. Partial updates allowed.
+   */
+  voice?: { [key: string]: unknown } | null;
+
+  /**
+   * Body param: Agent volume settings for audio output control.
+   */
+  volume?: Volume | null;
 }
 
 export interface AgentListParams {
@@ -1008,17 +1081,28 @@ export interface AgentListParams {
   tags?: Array<string> | null;
 }
 
+export interface AgentArchiveParams {
+  account_id: string;
+}
+
 export declare namespace Agents {
   export {
     type AgentResponse as AgentResponse,
     type AmbientSound as AmbientSound,
-    type AnthropicModel as AnthropicModel,
+    type AzureTranscriber as AzureTranscriber,
+    type CaptureSettings as CaptureSettings,
+    type DeepgramTranscriber as DeepgramTranscriber,
+    type Denoising as Denoising,
+    type InactivitySettings as InactivitySettings,
     type InitialMessage as InitialMessage,
     type InterruptSettings as InterruptSettings,
-    type OpenAIModel as OpenAIModel,
     type ResponseTiming as ResponseTiming,
+    type Volume as Volume,
     type AgentListResponse as AgentListResponse,
     type AgentCreateParams as AgentCreateParams,
+    type AgentRetrieveParams as AgentRetrieveParams,
+    type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentArchiveParams as AgentArchiveParams,
   };
 }

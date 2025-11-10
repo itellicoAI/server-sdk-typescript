@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Itellicoai REST API from server-side TypeScript or JavaScript.
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.itellico.ai](https://docs.itellico.ai/api-reference). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -29,13 +29,9 @@ const client = new Itellicoai({
   apiKey: process.env['ITELLICOAI_API_KEY'], // This is the default and can be omitted
 });
 
-const agentResponse = await client.accounts.agents.create('account_id', {
-  model: { model: 'gpt-5-mini', provider: 'azure_openai' },
-  transcriber: { provider: 'deepgram' },
-  voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
-});
+const account = await client.accounts.retrieveCurrent();
 
-console.log(agentResponse.id);
+console.log(account.id);
 ```
 
 ### Request & Response types
@@ -50,15 +46,7 @@ const client = new Itellicoai({
   apiKey: process.env['ITELLICOAI_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Itellicoai.Accounts.AgentCreateParams = {
-  model: { model: 'gpt-5-mini', provider: 'azure_openai' },
-  transcriber: { provider: 'deepgram' },
-  voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
-};
-const agentResponse: Itellicoai.Accounts.AgentResponse = await client.accounts.agents.create(
-  'account_id',
-  params,
-);
+const account: Itellicoai.Account = await client.accounts.retrieveCurrent();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -71,21 +59,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const agentResponse = await client.accounts.agents
-  .create('account_id', {
-    model: { model: 'gpt-5-mini', provider: 'azure_openai' },
-    transcriber: { provider: 'deepgram' },
-    voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
-  })
-  .catch(async (err) => {
-    if (err instanceof Itellicoai.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+const account = await client.accounts.retrieveCurrent().catch(async (err) => {
+  if (err instanceof Itellicoai.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
@@ -117,7 +99,7 @@ const client = new Itellicoai({
 });
 
 // Or, configure per-request:
-await client.accounts.agents.create('account_id', { model: { model: 'gpt-5-mini', provider: 'azure_openai' }, transcriber: { provider: 'deepgram' }, voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' } }, {
+await client.accounts.retrieveCurrent({
   maxRetries: 5,
 });
 ```
@@ -134,7 +116,7 @@ const client = new Itellicoai({
 });
 
 // Override per-request:
-await client.accounts.agents.create('account_id', { model: { model: 'gpt-5-mini', provider: 'azure_openai' }, transcriber: { provider: 'deepgram' }, voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' } }, {
+await client.accounts.retrieveCurrent({
   timeout: 5 * 1000,
 });
 ```
@@ -157,25 +139,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Itellicoai();
 
-const response = await client.accounts.agents
-  .create('account_id', {
-    model: { model: 'gpt-5-mini', provider: 'azure_openai' },
-    transcriber: { provider: 'deepgram' },
-    voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
-  })
-  .asResponse();
+const response = await client.accounts.retrieveCurrent().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: agentResponse, response: raw } = await client.accounts.agents
-  .create('account_id', {
-    model: { model: 'gpt-5-mini', provider: 'azure_openai' },
-    transcriber: { provider: 'deepgram' },
-    voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
-  })
-  .withResponse();
+const { data: account, response: raw } = await client.accounts.retrieveCurrent().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(agentResponse.id);
+console.log(account.id);
 ```
 
 ### Logging
@@ -255,7 +225,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.accounts.agents.create({
+client.accounts.retrieveCurrent({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
