@@ -29,9 +29,13 @@ const client = new Itellicoai({
   apiKey: process.env['ITELLICOAI_API_KEY'], // This is the default and can be omitted
 });
 
-const account = await client.accounts.retrieveCurrent();
+const agentResponse = await client.accounts.agents.create('account_id', {
+  model: { model: 'gpt-5-mini', provider: 'azure_openai' },
+  transcriber: { provider: 'deepgram' },
+  voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
+});
 
-console.log(account.uuid);
+console.log(agentResponse.id);
 ```
 
 ### Request & Response types
@@ -46,7 +50,15 @@ const client = new Itellicoai({
   apiKey: process.env['ITELLICOAI_API_KEY'], // This is the default and can be omitted
 });
 
-const account: Itellicoai.Account = await client.accounts.retrieveCurrent();
+const params: Itellicoai.Accounts.AgentCreateParams = {
+  model: { model: 'gpt-5-mini', provider: 'azure_openai' },
+  transcriber: { provider: 'deepgram' },
+  voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
+};
+const agentResponse: Itellicoai.Accounts.AgentResponse = await client.accounts.agents.create(
+  'account_id',
+  params,
+);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -59,15 +71,21 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const account = await client.accounts.retrieveCurrent().catch(async (err) => {
-  if (err instanceof Itellicoai.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const agentResponse = await client.accounts.agents
+  .create('account_id', {
+    model: { model: 'gpt-5-mini', provider: 'azure_openai' },
+    transcriber: { provider: 'deepgram' },
+    voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
+  })
+  .catch(async (err) => {
+    if (err instanceof Itellicoai.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -99,7 +117,7 @@ const client = new Itellicoai({
 });
 
 // Or, configure per-request:
-await client.accounts.retrieveCurrent({
+await client.accounts.agents.create('account_id', { model: { model: 'gpt-5-mini', provider: 'azure_openai' }, transcriber: { provider: 'deepgram' }, voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' } }, {
   maxRetries: 5,
 });
 ```
@@ -116,7 +134,7 @@ const client = new Itellicoai({
 });
 
 // Override per-request:
-await client.accounts.retrieveCurrent({
+await client.accounts.agents.create('account_id', { model: { model: 'gpt-5-mini', provider: 'azure_openai' }, transcriber: { provider: 'deepgram' }, voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' } }, {
   timeout: 5 * 1000,
 });
 ```
@@ -139,13 +157,25 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Itellicoai();
 
-const response = await client.accounts.retrieveCurrent().asResponse();
+const response = await client.accounts.agents
+  .create('account_id', {
+    model: { model: 'gpt-5-mini', provider: 'azure_openai' },
+    transcriber: { provider: 'deepgram' },
+    voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
+  })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: account, response: raw } = await client.accounts.retrieveCurrent().withResponse();
+const { data: agentResponse, response: raw } = await client.accounts.agents
+  .create('account_id', {
+    model: { model: 'gpt-5-mini', provider: 'azure_openai' },
+    transcriber: { provider: 'deepgram' },
+    voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
+  })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(account.uuid);
+console.log(agentResponse.id);
 ```
 
 ### Logging
@@ -225,7 +255,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.accounts.retrieveCurrent({
+client.accounts.agents.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

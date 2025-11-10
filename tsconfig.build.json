@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "itellicoai/*": ["dist/src/*"],
-      "itellicoai": ["dist/src/index.ts"]
+      "itellicoai/*": ["./dist/src/*"],
+      "itellicoai": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
