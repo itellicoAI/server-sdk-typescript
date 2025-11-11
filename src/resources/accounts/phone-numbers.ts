@@ -10,14 +10,6 @@ export class PhoneNumbers extends APIResource {
   /**
    * Create a phone number attached to a SIP trunk. LiveKit trunks are synchronized
    * automatically; FusionPBX linking is performed when applicable.
-   *
-   * @example
-   * ```ts
-   * const phoneNumber =
-   *   await client.accounts.phoneNumbers.create('account_id', {
-   *     sip_trunk_id: 'sip_trunk_id',
-   *   });
-   * ```
    */
   create(
     accountID: string,
@@ -29,15 +21,6 @@ export class PhoneNumbers extends APIResource {
 
   /**
    * Fetch a single phone number by ID for the specified account.
-   *
-   * @example
-   * ```ts
-   * const phoneNumber =
-   *   await client.accounts.phoneNumbers.retrieve(
-   *     'phone_number_id',
-   *     { account_id: 'account_id' },
-   *   );
-   * ```
    */
   retrieve(
     phoneNumberID: string,
@@ -51,15 +34,6 @@ export class PhoneNumbers extends APIResource {
   /**
    * Update a phone number's E.164 value, name, SIP trunk link, or inbound agent
    * assignment.
-   *
-   * @example
-   * ```ts
-   * const phoneNumber =
-   *   await client.accounts.phoneNumbers.update(
-   *     'phone_number_id',
-   *     { account_id: 'account_id' },
-   *   );
-   * ```
    */
   update(
     phoneNumberID: string,
@@ -75,12 +49,6 @@ export class PhoneNumbers extends APIResource {
 
   /**
    * Paginated list of phone numbers owned by the specified account.
-   *
-   * @example
-   * ```ts
-   * const phoneNumbers =
-   *   await client.accounts.phoneNumbers.list('account_id');
-   * ```
    */
   list(
     accountID: string,
@@ -93,14 +61,6 @@ export class PhoneNumbers extends APIResource {
   /**
    * Delete a phone number and clean up LiveKit trunks. If managed by FusionPBX, the
    * route is unlinked first.
-   *
-   * @example
-   * ```ts
-   * await client.accounts.phoneNumbers.delete(
-   *   'phone_number_id',
-   *   { account_id: 'account_id' },
-   * );
-   * ```
    */
   delete(phoneNumberID: string, params: PhoneNumberDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { account_id } = params;

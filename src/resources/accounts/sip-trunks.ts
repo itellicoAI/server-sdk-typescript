@@ -10,13 +10,6 @@ export class SipTrunks extends APIResource {
   /**
    * Create a Bring-Your-Own-Carrier (BYOC) SIP trunk for inbound/outbound calls. For
    * trunks that target FusionPBX, provisioning is performed synchronously.
-   *
-   * @example
-   * ```ts
-   * const sipTrunk = await client.accounts.sipTrunks.create(
-   *   'account_id',
-   * );
-   * ```
    */
   create(accountID: string, body: SipTrunkCreateParams, options?: RequestOptions): APIPromise<SipTrunk> {
     return this._client.post(path`/v1/accounts/${accountID}/sip-trunks`, { body, ...options });
@@ -24,14 +17,6 @@ export class SipTrunks extends APIResource {
 
   /**
    * Fetch a single SIP trunk by ID for the specified account.
-   *
-   * @example
-   * ```ts
-   * const sipTrunk = await client.accounts.sipTrunks.retrieve(
-   *   'sip_trunk_id',
-   *   { account_id: 'account_id' },
-   * );
-   * ```
    */
   retrieve(
     sipTrunkID: string,
@@ -44,14 +29,6 @@ export class SipTrunks extends APIResource {
 
   /**
    * Update BYOC SIP trunk properties and allowed IPs.
-   *
-   * @example
-   * ```ts
-   * const sipTrunk = await client.accounts.sipTrunks.update(
-   *   'sip_trunk_id',
-   *   { account_id: 'account_id' },
-   * );
-   * ```
    */
   update(sipTrunkID: string, params: SipTrunkUpdateParams, options?: RequestOptions): APIPromise<SipTrunk> {
     const { account_id, ...body } = params;
@@ -63,13 +40,6 @@ export class SipTrunks extends APIResource {
 
   /**
    * Paginated list of SIP trunks for the specified account.
-   *
-   * @example
-   * ```ts
-   * const sipTrunks = await client.accounts.sipTrunks.list(
-   *   'account_id',
-   * );
-   * ```
    */
   list(
     accountID: string,
@@ -81,13 +51,6 @@ export class SipTrunks extends APIResource {
 
   /**
    * Delete a SIP trunk that has no associated phone numbers.
-   *
-   * @example
-   * ```ts
-   * await client.accounts.sipTrunks.delete('sip_trunk_id', {
-   *   account_id: 'account_id',
-   * });
-   * ```
    */
   delete(sipTrunkID: string, params: SipTrunkDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { account_id } = params;

@@ -11,13 +11,6 @@ export class Providers extends APIResource {
    * List available models grouped by provider. Each provider entry includes its
    * code, name, an EU-hosted flag, and a list of models with id, name, description,
    * and supported configuration ranges (temperature, max_tokens).
-   *
-   * @example
-   * ```ts
-   * const response = await client.accounts.providers.listModels(
-   *   'account_id',
-   * );
-   * ```
    */
   listModels(accountID: string, options?: RequestOptions): APIPromise<ProviderListModelsResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/providers/models`, options);
@@ -27,14 +20,6 @@ export class Providers extends APIResource {
    * List available transcriber models grouped by provider. Each provider entry
    * includes its code, name, EU-hosted flag, and models with id, name, description,
    * and supported_languages (code/name).
-   *
-   * @example
-   * ```ts
-   * const response =
-   *   await client.accounts.providers.listTranscribers(
-   *     'account_id',
-   *   );
-   * ```
    */
   listTranscribers(
     accountID: string,
@@ -47,14 +32,6 @@ export class Providers extends APIResource {
    * List actual voice models from a specific provider with optional filters
    * (language, gender, search). Returns live data from voice providers like
    * ElevenLabs, Azure Speech, and Cartesia.
-   *
-   * @example
-   * ```ts
-   * const response = await client.accounts.providers.listVoices(
-   *   'account_id',
-   *   { provider: 'provider' },
-   * );
-   * ```
    */
   listVoices(
     accountID: string,

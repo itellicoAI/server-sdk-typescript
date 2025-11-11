@@ -18,6 +18,26 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  AgentArchiveParams,
+  AgentCreateParams,
+  AgentListParams,
+  AgentListResponse,
+  AgentResponse,
+  AgentRetrieveParams,
+  AgentUpdateParams,
+  Agents,
+  AmbientSound,
+  AzureTranscriber,
+  CaptureSettings,
+  DeepgramTranscriber,
+  Denoising,
+  InactivitySettings,
+  InitialMessage,
+  InterruptSettings,
+  ResponseTiming,
+  Volume,
+} from './resources/agents';
+import {
   Account,
   AccountListConversationsParams,
   AccountListConversationsResponse,
@@ -708,9 +728,11 @@ export class Itellicoai {
   static toFile = Uploads.toFile;
 
   accounts: API.Accounts = new API.Accounts(this);
+  agents: API.Agents = new API.Agents(this);
 }
 
 Itellicoai.Accounts = Accounts;
+Itellicoai.Agents = Agents;
 
 export declare namespace Itellicoai {
   export type RequestOptions = Opts.RequestOptions;
@@ -723,5 +745,26 @@ export declare namespace Itellicoai {
     type ConversationType as ConversationType,
     type AccountListConversationsResponse as AccountListConversationsResponse,
     type AccountListConversationsParams as AccountListConversationsParams,
+  };
+
+  export {
+    Agents as Agents,
+    type AgentResponse as AgentResponse,
+    type AmbientSound as AmbientSound,
+    type AzureTranscriber as AzureTranscriber,
+    type CaptureSettings as CaptureSettings,
+    type DeepgramTranscriber as DeepgramTranscriber,
+    type Denoising as Denoising,
+    type InactivitySettings as InactivitySettings,
+    type InitialMessage as InitialMessage,
+    type InterruptSettings as InterruptSettings,
+    type ResponseTiming as ResponseTiming,
+    type Volume as Volume,
+    type AgentListResponse as AgentListResponse,
+    type AgentCreateParams as AgentCreateParams,
+    type AgentRetrieveParams as AgentRetrieveParams,
+    type AgentUpdateParams as AgentUpdateParams,
+    type AgentListParams as AgentListParams,
+    type AgentArchiveParams as AgentArchiveParams,
   };
 }

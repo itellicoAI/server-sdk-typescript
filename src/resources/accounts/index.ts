@@ -10,26 +10,6 @@ export {
   type AccountListConversationsParams,
 } from './accounts';
 export {
-  Agents,
-  type AgentResponse,
-  type AmbientSound,
-  type AzureTranscriber,
-  type CaptureSettings,
-  type DeepgramTranscriber,
-  type Denoising,
-  type InactivitySettings,
-  type InitialMessage,
-  type InterruptSettings,
-  type ResponseTiming,
-  type Volume,
-  type AgentListResponse,
-  type AgentCreateParams,
-  type AgentRetrieveParams,
-  type AgentUpdateParams,
-  type AgentListParams,
-  type AgentArchiveParams,
-} from './agents';
-export {
   Analytics,
   type UsageGroupBy,
   type AnalyticsGetUsageResponse,
