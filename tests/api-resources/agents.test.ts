@@ -10,7 +10,7 @@ const client = new Itellicoai({
 describe('resource agents', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.accounts.agents.create('account_id', {
+    const responsePromise = client.agents.create('account_id', {
       model: { model: 'gpt-5-mini', provider: 'azure_openai' },
       transcriber: { provider: 'deepgram' },
       voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
@@ -26,7 +26,7 @@ describe('resource agents', () => {
 
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.accounts.agents.create('account_id', {
+    const response = await client.agents.create('account_id', {
       model: { model: 'gpt-5-mini', max_tokens: 1024, provider: 'azure_openai', temperature: 0.7 },
       transcriber: { keywords: ['string'], language: 'multi', model: 'nova-3:general', provider: 'deepgram' },
       voice: {
@@ -64,7 +64,7 @@ describe('resource agents', () => {
 
   // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.accounts.agents.retrieve('agent_id', { account_id: 'account_id' });
+    const responsePromise = client.agents.retrieve('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -76,12 +76,12 @@ describe('resource agents', () => {
 
   // Prism tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.accounts.agents.retrieve('agent_id', { account_id: 'account_id' });
+    const response = await client.agents.retrieve('agent_id', { account_id: 'account_id' });
   });
 
   // Prism tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.accounts.agents.update('agent_id', { account_id: 'account_id' });
+    const responsePromise = client.agents.update('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -93,7 +93,7 @@ describe('resource agents', () => {
 
   // Prism tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.accounts.agents.update('agent_id', {
+    const response = await client.agents.update('agent_id', {
       account_id: 'account_id',
       ambient_sound: { source: 'open_plan_office', volume: 0 },
       capture_settings: { recording_enabled: true },
@@ -121,7 +121,7 @@ describe('resource agents', () => {
 
   // Prism tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.accounts.agents.list('account_id');
+    const responsePromise = client.agents.list('account_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -135,7 +135,7 @@ describe('resource agents', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.accounts.agents.list(
+      client.agents.list(
         'account_id',
         {
           created_ge: '2019-12-27T18:11:19.117Z',
@@ -159,7 +159,7 @@ describe('resource agents', () => {
 
   // Prism tests are disabled
   test.skip('archive: only required params', async () => {
-    const responsePromise = client.accounts.agents.archive('agent_id', { account_id: 'account_id' });
+    const responsePromise = client.agents.archive('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -171,6 +171,6 @@ describe('resource agents', () => {
 
   // Prism tests are disabled
   test.skip('archive: required and optional params', async () => {
-    const response = await client.accounts.agents.archive('agent_id', { account_id: 'account_id' });
+    const response = await client.agents.archive('agent_id', { account_id: 'account_id' });
   });
 });

@@ -11,13 +11,6 @@ export class Analytics extends APIResource {
    * Aggregate conversation usage for the specified account. Supports configurable
    * time ranges, bucket granularity, and optional groupings by agent, subaccount, or
    * conversation type.
-   *
-   * @example
-   * ```ts
-   * const response = await client.accounts.analytics.getUsage(
-   *   'account_id',
-   * );
-   * ```
    */
   getUsage(
     accountID: string,
