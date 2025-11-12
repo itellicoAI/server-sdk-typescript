@@ -26,31 +26,6 @@ Methods:
 - <code title="patch /v1/accounts/{account_id}/subaccounts/{subaccount_id}">client.accounts.subaccounts.<a href="./src/resources/accounts/subaccounts.ts">update</a>(subaccountID, { ...params }) -> Account</code>
 - <code title="get /v1/accounts/{account_id}/subaccounts">client.accounts.subaccounts.<a href="./src/resources/accounts/subaccounts.ts">list</a>(accountID, { ...params }) -> SubaccountListResponse</code>
 
-## Agents
-
-Types:
-
-- <code><a href="./src/resources/accounts/agents.ts">AgentResponse</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">AmbientSound</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">AzureTranscriber</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">CaptureSettings</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">DeepgramTranscriber</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">Denoising</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">InactivitySettings</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">InitialMessage</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">InterruptSettings</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">ResponseTiming</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">Volume</a></code>
-- <code><a href="./src/resources/accounts/agents.ts">AgentListResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/accounts/{account_id}/agents">client.accounts.agents.<a href="./src/resources/accounts/agents.ts">create</a>(accountID, { ...params }) -> AgentResponse</code>
-- <code title="get /v1/accounts/{account_id}/agents/{agent_id}">client.accounts.agents.<a href="./src/resources/accounts/agents.ts">retrieve</a>(agentID, { ...params }) -> AgentResponse</code>
-- <code title="patch /v1/accounts/{account_id}/agents/{agent_id}">client.accounts.agents.<a href="./src/resources/accounts/agents.ts">update</a>(agentID, { ...params }) -> AgentResponse</code>
-- <code title="get /v1/accounts/{account_id}/agents">client.accounts.agents.<a href="./src/resources/accounts/agents.ts">list</a>(accountID, { ...params }) -> AgentListResponse</code>
-- <code title="delete /v1/accounts/{account_id}/agents/{agent_id}">client.accounts.agents.<a href="./src/resources/accounts/agents.ts">archive</a>(agentID, { ...params }) -> void</code>
-
 ## Providers
 
 Types:
@@ -107,3 +82,28 @@ Types:
 Methods:
 
 - <code title="get /v1/accounts/{account_id}/analytics/usage">client.accounts.analytics.<a href="./src/resources/accounts/analytics.ts">getUsage</a>(accountID, { ...params }) -> AnalyticsGetUsageResponse</code>
+
+# Agents
+
+Types:
+
+- <code><a href="./src/resources/agents.ts">AgentResponse</a></code>
+- <code><a href="./src/resources/agents.ts">AmbientSound</a></code>
+- <code><a href="./src/resources/agents.ts">AzureTranscriber</a></code>
+- <code><a href="./src/resources/agents.ts">CaptureSettings</a></code>
+- <code><a href="./src/resources/agents.ts">DeepgramTranscriber</a></code>
+- <code><a href="./src/resources/agents.ts">Denoising</a></code>
+- <code><a href="./src/resources/agents.ts">InactivitySettings</a></code>
+- <code><a href="./src/resources/agents.ts">InitialMessage</a></code>
+- <code><a href="./src/resources/agents.ts">InterruptSettings</a></code>
+- <code><a href="./src/resources/agents.ts">ResponseTiming</a></code>
+- <code><a href="./src/resources/agents.ts">Volume</a></code>
+- <code><a href="./src/resources/agents.ts">AgentListResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/accounts/{account_id}/agents">client.agents.<a href="./src/resources/agents.ts">create</a>(accountID, { ...params }) -> AgentResponse</code>
+- <code title="get /v1/accounts/{account_id}/agents/{agent_id}">client.agents.<a href="./src/resources/agents.ts">retrieve</a>(agentID, { ...params }) -> AgentResponse</code>
+- <code title="patch /v1/accounts/{account_id}/agents/{agent_id}">client.agents.<a href="./src/resources/agents.ts">update</a>(agentID, { ...params }) -> AgentResponse</code>
+- <code title="get /v1/accounts/{account_id}/agents">client.agents.<a href="./src/resources/agents.ts">list</a>(accountID, { ...params }) -> AgentListResponse</code>
+- <code title="delete /v1/accounts/{account_id}/agents/{agent_id}">client.agents.<a href="./src/resources/agents.ts">archive</a>(agentID, { ...params }) -> void</code>

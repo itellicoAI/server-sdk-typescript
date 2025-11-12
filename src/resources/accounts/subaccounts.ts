@@ -10,14 +10,6 @@ export class Subaccounts extends APIResource {
   /**
    * Create a new subaccount under the specified parent account. The creator becomes
    * OWNER of the new subaccount.
-   *
-   * @example
-   * ```ts
-   * const account = await client.accounts.subaccounts.create(
-   *   'account_id',
-   *   { name: 'name' },
-   * );
-   * ```
    */
   create(
     accountID: string,
@@ -29,14 +21,6 @@ export class Subaccounts extends APIResource {
 
   /**
    * Fetch a specific subaccount by ID under the specified parent account.
-   *
-   * @example
-   * ```ts
-   * const account = await client.accounts.subaccounts.retrieve(
-   *   'subaccount_id',
-   *   { account_id: 'account_id' },
-   * );
-   * ```
    */
   retrieve(
     subaccountID: string,
@@ -49,14 +33,6 @@ export class Subaccounts extends APIResource {
 
   /**
    * Update subaccount properties such as name.
-   *
-   * @example
-   * ```ts
-   * const account = await client.accounts.subaccounts.update(
-   *   'subaccount_id',
-   *   { account_id: 'account_id' },
-   * );
-   * ```
    */
   update(
     subaccountID: string,
@@ -72,13 +48,6 @@ export class Subaccounts extends APIResource {
 
   /**
    * Paginated list of child accounts directly under the specified parent account.
-   *
-   * @example
-   * ```ts
-   * const subaccounts = await client.accounts.subaccounts.list(
-   *   'account_id',
-   * );
-   * ```
    */
   list(
     accountID: string,

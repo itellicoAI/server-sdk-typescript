@@ -2,27 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as AccountsAPI from './accounts';
-import * as AgentsAPI from './agents';
-import {
-  AgentArchiveParams,
-  AgentCreateParams,
-  AgentListParams,
-  AgentListResponse,
-  AgentResponse,
-  AgentRetrieveParams,
-  AgentUpdateParams,
-  Agents,
-  AmbientSound,
-  AzureTranscriber,
-  CaptureSettings,
-  DeepgramTranscriber,
-  Denoising,
-  InactivitySettings,
-  InitialMessage,
-  InterruptSettings,
-  ResponseTiming,
-  Volume,
-} from './agents';
 import * as AnalyticsAPI from './analytics';
 import { Analytics, AnalyticsGetUsageParams, AnalyticsGetUsageResponse, UsageGroupBy } from './analytics';
 import * as PhoneNumbersAPI from './phone-numbers';
@@ -72,7 +51,6 @@ import { path } from '../../internal/utils/path';
 
 export class Accounts extends APIResource {
   subaccounts: SubaccountsAPI.Subaccounts = new SubaccountsAPI.Subaccounts(this._client);
-  agents: AgentsAPI.Agents = new AgentsAPI.Agents(this._client);
   providers: ProvidersAPI.Providers = new ProvidersAPI.Providers(this._client);
   phoneNumbers: PhoneNumbersAPI.PhoneNumbers = new PhoneNumbersAPI.PhoneNumbers(this._client);
   sipTrunks: SipTrunksAPI.SipTrunks = new SipTrunksAPI.SipTrunks(this._client);
@@ -80,13 +58,6 @@ export class Accounts extends APIResource {
 
   /**
    * Paginated list of conversations for the specified account and its subaccounts.
-   *
-   * @example
-   * ```ts
-   * const response = await client.accounts.listConversations(
-   *   'account_id',
-   * );
-   * ```
    */
   listConversations(
     accountID: string,
@@ -98,11 +69,6 @@ export class Accounts extends APIResource {
 
   /**
    * Return the authenticated account for the provided API key.
-   *
-   * @example
-   * ```ts
-   * const account = await client.accounts.retrieveCurrent();
-   * ```
    */
   retrieveCurrent(options?: RequestOptions): APIPromise<Account> {
     return this._client.get('/v1/accounts/current', options);
@@ -341,7 +307,6 @@ export interface AccountListConversationsParams {
 }
 
 Accounts.Subaccounts = Subaccounts;
-Accounts.Agents = Agents;
 Accounts.Providers = Providers;
 Accounts.PhoneNumbers = PhoneNumbers;
 Accounts.SipTrunks = SipTrunks;
@@ -364,27 +329,6 @@ export declare namespace Accounts {
     type SubaccountRetrieveParams as SubaccountRetrieveParams,
     type SubaccountUpdateParams as SubaccountUpdateParams,
     type SubaccountListParams as SubaccountListParams,
-  };
-
-  export {
-    Agents as Agents,
-    type AgentResponse as AgentResponse,
-    type AmbientSound as AmbientSound,
-    type AzureTranscriber as AzureTranscriber,
-    type CaptureSettings as CaptureSettings,
-    type DeepgramTranscriber as DeepgramTranscriber,
-    type Denoising as Denoising,
-    type InactivitySettings as InactivitySettings,
-    type InitialMessage as InitialMessage,
-    type InterruptSettings as InterruptSettings,
-    type ResponseTiming as ResponseTiming,
-    type Volume as Volume,
-    type AgentListResponse as AgentListResponse,
-    type AgentCreateParams as AgentCreateParams,
-    type AgentRetrieveParams as AgentRetrieveParams,
-    type AgentUpdateParams as AgentUpdateParams,
-    type AgentListParams as AgentListParams,
-    type AgentArchiveParams as AgentArchiveParams,
   };
 
   export {

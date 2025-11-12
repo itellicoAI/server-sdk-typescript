@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
-import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Agents extends APIResource {
   /**
@@ -12,7 +12,7 @@ export class Agents extends APIResource {
    *
    * @example
    * ```ts
-   * const agentResponse = await client.accounts.agents.create(
+   * const agentResponse = await client.agents.create(
    *   'account_id',
    *   {
    *     model: {
@@ -37,7 +37,7 @@ export class Agents extends APIResource {
    *
    * @example
    * ```ts
-   * const agentResponse = await client.accounts.agents.retrieve(
+   * const agentResponse = await client.agents.retrieve(
    *   'agent_id',
    *   { account_id: 'account_id' },
    * );
@@ -58,7 +58,7 @@ export class Agents extends APIResource {
    *
    * @example
    * ```ts
-   * const agentResponse = await client.accounts.agents.update(
+   * const agentResponse = await client.agents.update(
    *   'agent_id',
    *   { account_id: 'account_id' },
    * );
@@ -75,9 +75,7 @@ export class Agents extends APIResource {
    *
    * @example
    * ```ts
-   * const agents = await client.accounts.agents.list(
-   *   'account_id',
-   * );
+   * const agents = await client.agents.list('account_id');
    * ```
    */
   list(
@@ -94,7 +92,7 @@ export class Agents extends APIResource {
    *
    * @example
    * ```ts
-   * await client.accounts.agents.archive('agent_id', {
+   * await client.agents.archive('agent_id', {
    *   account_id: 'account_id',
    * });
    * ```
