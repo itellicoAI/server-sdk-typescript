@@ -32,14 +32,7 @@ describe('resource agents', () => {
       voice: {
         voice_id: 'pMsXgVXv3BLzUgSXRplE',
         provider: 'elevenlabs',
-        settings: {
-          optimize_streaming_latency: 0,
-          similarity_boost: 0.7,
-          speed: 0.7,
-          stability: 0.7,
-          style: 0,
-          use_speaker_boost: true,
-        },
+        settings: { similarity_boost: 0.7, speed: 0.7, stability: 0.7, style: 0, use_speaker_boost: true },
       },
       ambient_sound: { source: 'open_plan_office', volume: 0 },
       capture_settings: { recording_enabled: true },

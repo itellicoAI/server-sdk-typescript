@@ -118,6 +118,11 @@ export namespace ProviderListModelsResponse {
       description?: string | null;
 
       /**
+       * Whether this model is recommended for most use cases
+       */
+      recommended?: boolean | null;
+
+      /**
        * Supported configurable ranges for a model (temperature, max_tokens).
        */
       settings?: Model.Settings | null;
