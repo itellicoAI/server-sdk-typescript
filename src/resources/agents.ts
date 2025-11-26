@@ -888,11 +888,6 @@ export namespace AgentCreateParams {
      */
     export interface Settings {
       /**
-       * Optimize streaming latency setting
-       */
-      optimize_streaming_latency?: number | null;
-
-      /**
        * Voice similarity boost setting
        */
       similarity_boost?: number | null;
