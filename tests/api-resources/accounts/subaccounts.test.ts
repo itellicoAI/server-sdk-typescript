@@ -85,7 +85,11 @@ describe('resource subaccounts', () => {
     await expect(
       client.accounts.subaccounts.list(
         'account_id',
-        { is_active: true, limit: 1, offset: 0 },
+        {
+          is_active: true,
+          limit: 1,
+          offset: 0,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Itellicoai.NotFoundError);

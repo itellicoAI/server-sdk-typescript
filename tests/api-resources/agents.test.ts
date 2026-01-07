@@ -27,12 +27,28 @@ describe('resource agents', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.agents.create('account_id', {
-      model: { model: 'gpt-5-mini', max_tokens: 1024, provider: 'azure_openai', temperature: 0.7 },
-      transcriber: { keywords: ['string'], language: 'multi', model: 'nova-3:general', provider: 'deepgram' },
+      model: {
+        model: 'gpt-5-mini',
+        max_tokens: 1024,
+        provider: 'azure_openai',
+        temperature: 0.7,
+      },
+      transcriber: {
+        keywords: ['string'],
+        language: 'multi',
+        model: 'nova-3:general',
+        provider: 'deepgram',
+      },
       voice: {
         voice_id: 'pMsXgVXv3BLzUgSXRplE',
         provider: 'elevenlabs',
-        settings: { similarity_boost: 0.7, speed: 0.7, stability: 0.7, style: 0, use_speaker_boost: true },
+        settings: {
+          similarity_boost: 0.7,
+          speed: 0.7,
+          stability: 0.7,
+          style: 0,
+          use_speaker_boost: true,
+        },
       },
       ambient_sound: { source: 'open_plan_office', volume: 0 },
       capture_settings: { recording_enabled: true },
@@ -43,15 +59,28 @@ describe('resource agents', () => {
         reminder_timeout_ms: 5000,
         reset_on_activity: true,
       },
-      initial_message: { delay_ms: 0, interruptible: true, message: 'message', mode: 'fixed_message' },
-      interrupt_settings: { enabled: true, min_speech_seconds: 0, min_words: 0 },
+      initial_message: {
+        delay_ms: 0,
+        interruptible: true,
+        message: 'message',
+        mode: 'fixed_message',
+      },
+      interrupt_settings: {
+        enabled: true,
+        min_speech_seconds: 0,
+        min_words: 0,
+      },
       max_duration_seconds: 10,
       metadata: { foo: 'bar' },
       name: 'Customer Support Agent',
       note: 'note',
       response_timing: { min_endpointing_delay_seconds: 0 },
       tags: ['string'],
-      volume: { allow_adjustment: true, telephony: 0, web: 0 },
+      volume: {
+        allow_adjustment: true,
+        telephony: 0,
+        web: 0,
+      },
     });
   });
 
@@ -97,8 +126,17 @@ describe('resource agents', () => {
         reminder_timeout_ms: 5000,
         reset_on_activity: true,
       },
-      initial_message: { delay_ms: 0, interruptible: true, message: 'message', mode: 'fixed_message' },
-      interrupt_settings: { enabled: true, min_speech_seconds: 0, min_words: 0 },
+      initial_message: {
+        delay_ms: 0,
+        interruptible: true,
+        message: 'message',
+        mode: 'fixed_message',
+      },
+      interrupt_settings: {
+        enabled: true,
+        min_speech_seconds: 0,
+        min_words: 0,
+      },
       max_duration_seconds: 10,
       metadata: { foo: 'bar' },
       model: { foo: 'bar' },
@@ -108,7 +146,11 @@ describe('resource agents', () => {
       tags: ['string'],
       transcriber: { language: 'af-ZA', provider: 'azure' },
       voice: { foo: 'bar' },
-      volume: { allow_adjustment: true, telephony: 0, web: 0 },
+      volume: {
+        allow_adjustment: true,
+        telephony: 0,
+        web: 0,
+      },
     });
   });
 
