@@ -6,6 +6,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+ */
 export class Agents extends APIResource {
   /**
    * Create a new AI agent with specified configuration for voice conversations.
@@ -921,7 +924,7 @@ export interface AgentRetrieveParams {
 
 export interface AgentUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   account_id: string;
 

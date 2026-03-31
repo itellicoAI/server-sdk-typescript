@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+ */
 export class SipTrunks extends APIResource {
   /**
    * Create a Bring-Your-Own-Carrier (BYOC) SIP trunk for inbound/outbound calls. For
@@ -115,7 +118,7 @@ export interface SipTrunkRetrieveParams {
 
 export interface SipTrunkUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   account_id: string;
 
@@ -125,12 +128,12 @@ export interface SipTrunkUpdateParams {
   allowed_ips?: Array<string> | null;
 
   /**
-   * Body param:
+   * Body param
    */
   name?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   termination_uri?: string | null;
 }

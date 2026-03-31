@@ -6,6 +6,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Discover available AI model, transcriber, and voice catalogs for the current account when configuring agents.
+ */
 export class Providers extends APIResource {
   /**
    * List available models grouped by provider. Each provider entry includes its

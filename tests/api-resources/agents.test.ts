@@ -8,7 +8,7 @@ const client = new Itellicoai({
 });
 
 describe('resource agents', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.agents.create('account_id', {
       model: { model: 'gpt-5-mini', provider: 'azure_openai' },
@@ -24,7 +24,7 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.agents.create('account_id', {
       model: {
@@ -84,7 +84,7 @@ describe('resource agents', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.agents.retrieve('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -96,12 +96,12 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.agents.retrieve('agent_id', { account_id: 'account_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.agents.update('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -113,7 +113,7 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.agents.update('agent_id', {
       account_id: 'account_id',
@@ -154,7 +154,7 @@ describe('resource agents', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.agents.list('account_id');
     const rawResponse = await responsePromise.asResponse();
@@ -166,7 +166,7 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -192,7 +192,7 @@ describe('resource agents', () => {
     ).rejects.toThrow(Itellicoai.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('archive: only required params', async () => {
     const responsePromise = client.agents.archive('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -204,7 +204,7 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('archive: required and optional params', async () => {
     const response = await client.agents.archive('agent_id', { account_id: 'account_id' });
   });
