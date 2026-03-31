@@ -8,7 +8,7 @@ const client = new Itellicoai({
 });
 
 describe('resource accounts', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listConversations', async () => {
     const responsePromise = client.accounts.listConversations('account_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource accounts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listConversations: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -42,7 +42,7 @@ describe('resource accounts', () => {
     ).rejects.toThrow(Itellicoai.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveCurrent', async () => {
     const responsePromise = client.accounts.retrieveCurrent();
     const rawResponse = await responsePromise.asResponse();

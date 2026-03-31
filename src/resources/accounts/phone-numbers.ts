@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+ */
 export class PhoneNumbers extends APIResource {
   /**
    * Create a phone number attached to a SIP trunk. LiveKit trunks are synchronized
@@ -144,7 +147,7 @@ export interface PhoneNumberRetrieveParams {
 
 export interface PhoneNumberUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   account_id: string;
 

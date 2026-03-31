@@ -281,17 +281,17 @@ export interface AccountListConversationsParams {
   created_before?: string | null;
 
   /**
-   * Directionality of a conversation.
+   * Filter by conversation direction (inbound or outbound).
    */
   direction?: ConversationDirection | null;
 
   /**
-   * High-level lifecycle statuses reported by the conversations API.
+   * Filter by lifecycle status (in_progress, completed, failed, transferred).
    */
   status?: ConversationStatus | null;
 
   /**
-   * High-level conversation types exposed via the v1 API.
+   * Filter by conversation type (phone, web, or test).
    */
   type?: ConversationType | null;
 

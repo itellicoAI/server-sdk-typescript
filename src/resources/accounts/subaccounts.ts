@@ -6,6 +6,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create and manage child accounts under a parent to model tenant hierarchies and delegated access.
+ */
 export class Subaccounts extends APIResource {
   /**
    * Create a new subaccount under the specified parent account. The creator becomes
@@ -77,7 +80,7 @@ export interface SubaccountRetrieveParams {
 
 export interface SubaccountUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   account_id: string;
 

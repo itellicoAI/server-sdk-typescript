@@ -6,6 +6,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Usage analytics and reporting endpoints for conversation activity.
+ */
 export class Analytics extends APIResource {
   /**
    * Aggregate conversation usage for the specified account. Supports configurable

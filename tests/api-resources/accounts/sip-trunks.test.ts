@@ -8,7 +8,7 @@ const client = new Itellicoai({
 });
 
 describe('resource sipTrunks', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.accounts.sipTrunks.create('account_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource sipTrunks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.accounts.sipTrunks.retrieve('sip_trunk_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -32,12 +32,12 @@ describe('resource sipTrunks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.accounts.sipTrunks.retrieve('sip_trunk_id', { account_id: 'account_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.accounts.sipTrunks.update('sip_trunk_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +49,7 @@ describe('resource sipTrunks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.accounts.sipTrunks.update('sip_trunk_id', {
       account_id: 'account_id',
@@ -59,7 +59,7 @@ describe('resource sipTrunks', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.accounts.sipTrunks.list('account_id');
     const rawResponse = await responsePromise.asResponse();
@@ -71,7 +71,7 @@ describe('resource sipTrunks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -83,7 +83,7 @@ describe('resource sipTrunks', () => {
     ).rejects.toThrow(Itellicoai.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.accounts.sipTrunks.delete('sip_trunk_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -95,7 +95,7 @@ describe('resource sipTrunks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.accounts.sipTrunks.delete('sip_trunk_id', { account_id: 'account_id' });
   });
