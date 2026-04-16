@@ -13,6 +13,7 @@ export class Providers extends APIResource {
   /**
    * List available models grouped by provider. Each provider entry includes its
    * code, name, an EU-hosted flag, and a list of models with id, name, description,
+   * recommendation metadata, pricing, latency/intelligence ratings, latency ranges,
    * and supported configuration ranges (temperature, max_tokens).
    */
   listModels(accountID: string, options?: RequestOptions): APIPromise<ProviderListModelsResponse> {
@@ -121,6 +122,26 @@ export namespace ProviderListModelsResponse {
       description?: string | null;
 
       /**
+       * Relative intelligence rating on a 1-5 scale
+       */
+      intelligence_rating?: number | null;
+
+      /**
+       * Observed latency range for a model in milliseconds.
+       */
+      latency_range?: Model.LatencyRange | null;
+
+      /**
+       * Relative latency rating on a 1-5 scale
+       */
+      latency_rating?: number | null;
+
+      /**
+       * Optional pricing metadata for a model.
+       */
+      pricing?: Model.Pricing | null;
+
+      /**
        * Whether this model is recommended for most use cases
        */
       recommended?: boolean | null;
@@ -132,6 +153,36 @@ export namespace ProviderListModelsResponse {
     }
 
     export namespace Model {
+      /**
+       * Observed latency range for a model in milliseconds.
+       */
+      export interface LatencyRange {
+        /**
+         * Upper bound of observed latency in milliseconds
+         */
+        max_ms?: number | null;
+
+        /**
+         * Lower bound of observed latency in milliseconds
+         */
+        min_ms?: number | null;
+      }
+
+      /**
+       * Optional pricing metadata for a model.
+       */
+      export interface Pricing {
+        /**
+         * Extra cost per minute for this model tier
+         */
+        additional_cost_per_minute?: number | null;
+
+        /**
+         * Pricing tier label
+         */
+        tier?: string | null;
+      }
+
       /**
        * Supported configurable ranges for a model (temperature, max_tokens).
        */
@@ -197,16 +248,6 @@ export namespace ProviderListTranscribersResponse {
          * Display label for the language
          */
         name: string;
-
-        /**
-         * Optional description (typically for 'multi')
-         */
-        description?: string | null;
-
-        /**
-         * For 'multi', optional list of included languages (codes)
-         */
-        includes?: Array<string> | null;
       }
     }
   }

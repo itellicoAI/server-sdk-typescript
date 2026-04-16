@@ -50,6 +50,8 @@ describe('resource agents', () => {
           use_speaker_boost: true,
         },
       },
+      allow_auto_hangup: true,
+      allow_caller_recording_opt_out: true,
       ambient_sound: { source: 'open_plan_office', volume: 0 },
       capture_settings: { recording_enabled: true },
       denoising: { telephony: true, web: true },
@@ -117,6 +119,8 @@ describe('resource agents', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.agents.update('agent_id', {
       account_id: 'account_id',
+      allow_auto_hangup: true,
+      allow_caller_recording_opt_out: true,
       ambient_sound: { source: 'open_plan_office', volume: 0 },
       capture_settings: { recording_enabled: true },
       denoising: { telephony: true, web: true },
@@ -177,6 +181,7 @@ describe('resource agents', () => {
           created_gt: '2019-12-27T18:11:19.117Z',
           created_le: '2019-12-27T18:11:19.117Z',
           created_lt: '2019-12-27T18:11:19.117Z',
+          include_archived: true,
           is_archived: true,
           limit: 1,
           modified_ge: '2019-12-27T18:11:19.117Z',
