@@ -125,6 +125,17 @@ export interface AgentResponse {
   account_id: string;
 
   /**
+   * Whether the AI may automatically end the call when the conversation has
+   * concluded.
+   */
+  allow_auto_hangup: boolean;
+
+  /**
+   * Whether callers may request that recording stop and captured audio be deleted.
+   */
+  allow_caller_recording_opt_out: boolean;
+
+  /**
    * Configuration for ambient background sounds during the conversation.
    */
   ambient_sound: AmbientSound;
@@ -665,6 +676,17 @@ export interface AgentCreateParams {
     | AgentCreateParams.ElevenLabsVoiceSchema;
 
   /**
+   * Whether the AI may automatically end the call when the conversation has
+   * concluded.
+   */
+  allow_auto_hangup?: boolean | null;
+
+  /**
+   * Whether callers may request that recording stop and captured audio be deleted.
+   */
+  allow_caller_recording_opt_out?: boolean | null;
+
+  /**
    * Configuration for ambient background sounds during the conversation
    */
   ambient_sound?: AmbientSound;
@@ -929,6 +951,18 @@ export interface AgentUpdateParams {
   account_id: string;
 
   /**
+   * Body param: Whether the AI may automatically end the call when the conversation
+   * has concluded.
+   */
+  allow_auto_hangup?: boolean | null;
+
+  /**
+   * Body param: Whether callers may request that recording stop and captured audio
+   * be deleted.
+   */
+  allow_caller_recording_opt_out?: boolean | null;
+
+  /**
    * Body param: Configuration for ambient background sounds during the conversation
    */
   ambient_sound?: AmbientSound | null;
@@ -1036,6 +1070,11 @@ export interface AgentListParams {
    * Filter agents created before this datetime (ISO 8601, timezone-aware).
    */
   created_lt?: string | null;
+
+  /**
+   * When true, include archived agents alongside active ones.
+   */
+  include_archived?: boolean | null;
 
   /**
    * Filter by archived status. If omitted, archived are excluded by default.

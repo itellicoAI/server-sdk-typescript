@@ -24,14 +24,28 @@ export class Analytics extends APIResource {
   }
 }
 
+/**
+ * Dimensions for grouping usage analytics.
+ *
+ * Attributes: AGENT: Group by individual agent. SUBACCOUNT: Group by subaccount
+ * (child team). TYPE: Group by conversation type.
+ */
 export type UsageGroupBy = 'agent' | 'subaccount' | 'type';
 
 /**
- * Usage analytics response payload.
+ * Complete usage analytics response payload.
+ *
+ * Attributes: meta: Metadata about the query and response. data: List of time
+ * buckets with aggregated usage values.
  */
 export interface AnalyticsGetUsageResponse {
   /**
-   * Metadata describing the usage response.
+   * Metadata describing the usage analytics response.
+   *
+   * Attributes: account_id: UUID of the account for this usage data. start: Start
+   * datetime of the query range. end: End datetime of the query range. granularity:
+   * Time bucket granularity used. group_by: Grouping dimensions requested. tz:
+   * Timezone applied to bucket boundaries.
    */
   meta: AnalyticsGetUsageResponse.Meta;
 
@@ -40,13 +54,24 @@ export interface AnalyticsGetUsageResponse {
 
 export namespace AnalyticsGetUsageResponse {
   /**
-   * Metadata describing the usage response.
+   * Metadata describing the usage analytics response.
+   *
+   * Attributes: account_id: UUID of the account for this usage data. start: Start
+   * datetime of the query range. end: End datetime of the query range. granularity:
+   * Time bucket granularity used. group_by: Grouping dimensions requested. tz:
+   * Timezone applied to bucket boundaries.
    */
   export interface Meta {
     account_id: string;
 
     end: string;
 
+    /**
+     * Time bucket granularity for usage aggregation.
+     *
+     * Attributes: HOUR: Aggregate data by hour. DAY: Aggregate data by day. MONTH:
+     * Aggregate data by month.
+     */
     granularity: 'hour' | 'day' | 'month';
 
     start: string;
@@ -63,7 +88,10 @@ export namespace AnalyticsGetUsageResponse {
   }
 
   /**
-   * Time bucket containing one or more metric values.
+   * Time bucket containing aggregated metric values.
+   *
+   * Attributes: ts: Bucket start timestamp in the requested timezone. values: List
+   * of metric values for this bucket.
    */
   export interface Data {
     /**
@@ -80,6 +108,10 @@ export namespace AnalyticsGetUsageResponse {
   export namespace Data {
     /**
      * Metric values aggregated for a single time bucket and dimension set.
+     *
+     * Attributes: seconds: Total conversation seconds for this value. conversations:
+     * Number of completed conversations. dimensions: Optional grouping dimension
+     * key/value pairs.
      */
     export interface Value {
       /**

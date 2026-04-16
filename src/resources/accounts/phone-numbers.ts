@@ -62,7 +62,8 @@ export class PhoneNumbers extends APIResource {
   }
 
   /**
-   * Delete a phone number and clean up LiveKit trunks. If managed by FusionPBX, the
+   * Release purchased numbers with the provider, remove them from future billing,
+   * archive the local record, and disable campaign use. If managed by FusionPBX, the
    * route is unlinked first.
    */
   delete(phoneNumberID: string, params: PhoneNumberDeleteParams, options?: RequestOptions): APIPromise<void> {
@@ -105,6 +106,8 @@ export namespace PhoneNumber {
 
   export interface SipTrunk {
     id: string;
+
+    is_managed: boolean;
 
     /**
      * Display name for this SIP trunk
