@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+ */
 export class PhoneNumbers extends APIResource {
   /**
    * Create a phone number attached to a SIP trunk. LiveKit trunks are synchronized
@@ -59,7 +62,8 @@ export class PhoneNumbers extends APIResource {
   }
 
   /**
-   * Delete a phone number and clean up LiveKit trunks. If managed by FusionPBX, the
+   * Release purchased numbers with the provider, remove them from future billing,
+   * archive the local record, and disable campaign use. If managed by FusionPBX, the
    * route is unlinked first.
    */
   delete(phoneNumberID: string, params: PhoneNumberDeleteParams, options?: RequestOptions): APIPromise<void> {
@@ -103,6 +107,8 @@ export namespace PhoneNumber {
   export interface SipTrunk {
     id: string;
 
+    is_managed: boolean;
+
     /**
      * Display name for this SIP trunk
      */
@@ -144,7 +150,7 @@ export interface PhoneNumberRetrieveParams {
 
 export interface PhoneNumberUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   account_id: string;
 

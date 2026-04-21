@@ -8,7 +8,7 @@ const client = new Itellicoai({
 });
 
 describe('resource providers', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listModels', async () => {
     const responsePromise = client.accounts.providers.listModels('account_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource providers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listTranscribers', async () => {
     const responsePromise = client.accounts.providers.listTranscribers('account_id');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource providers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listVoices: only required params', async () => {
     const responsePromise = client.accounts.providers.listVoices('account_id', { provider: 'provider' });
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource providers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listVoices: required and optional params', async () => {
     const response = await client.accounts.providers.listVoices('account_id', {
       provider: 'provider',

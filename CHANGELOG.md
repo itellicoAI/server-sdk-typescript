@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.1.0 (2026-04-21)
+
+Full Changelog: [v1.0.0...v1.1.0](https://github.com/itellicoAI/server-sdk-typescript/compare/v1.0.0...v1.1.0)
+
+### Features
+
+* **api:** api update ([118b70e](https://github.com/itellicoAI/server-sdk-typescript/commit/118b70e4045aa2321227002ae9df000b61ba5951))
+* **api:** api update ([9c19694](https://github.com/itellicoAI/server-sdk-typescript/commit/9c19694949a2aebd68755ab7b20353bb693cd02f))
+* **api:** api update ([6d242f0](https://github.com/itellicoAI/server-sdk-typescript/commit/6d242f0f1008c10a6d8cd27c3efa44d1608137fd))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([c403c71](https://github.com/itellicoAI/server-sdk-typescript/commit/c403c71d33b2753fef171f642d93af5b7a14891b))
+* **mcp:** return correct lines on typescript errors ([2fe96f2](https://github.com/itellicoAI/server-sdk-typescript/commit/2fe96f23df522300dc0465b11bffe93a3805508f))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([74ecdf9](https://github.com/itellicoAI/server-sdk-typescript/commit/74ecdf9345ade14c00a25a3108c2f5902a7f313a))
+* **client:** fix logger property type ([6a8c8fe](https://github.com/itellicoAI/server-sdk-typescript/commit/6a8c8fe87d1177cc08754e886c0381ff394bf631))
+* **internal:** codegen related update ([a06c03c](https://github.com/itellicoAI/server-sdk-typescript/commit/a06c03cbfb3c0fe07a23fc40b2ddd21ea662bfd4))
+* **internal:** codegen related update ([f0d396f](https://github.com/itellicoAI/server-sdk-typescript/commit/f0d396f1e1eb76ce92cf73d66b0020671254bd1c))
+* **internal:** codegen related update ([a7b70a6](https://github.com/itellicoAI/server-sdk-typescript/commit/a7b70a60d189c4be3a005b14540d6019a203f066))
+* **internal:** codegen related update ([e1f257c](https://github.com/itellicoAI/server-sdk-typescript/commit/e1f257cc260f633bebacb6aee4164cfc614f8d36))
+* **internal:** configure pnpm minimumReleaseAge to 1 day ([bc92862](https://github.com/itellicoAI/server-sdk-typescript/commit/bc928621b4a2a8db864580250b5f7d6e558491ce))
+* **internal:** upgrade eslint ([133051c](https://github.com/itellicoAI/server-sdk-typescript/commit/133051c8745542547cbf6073190778b947b15fbd))
+
 ## 1.0.0 (2025-11-12)
 
 Full Changelog: [v0.0.1...v1.0.0](https://github.com/itellicoAI/server-sdk-typescript/compare/v0.0.1...v1.0.0)

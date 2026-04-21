@@ -8,7 +8,7 @@ const client = new Itellicoai({
 });
 
 describe('resource phoneNumbers', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.accounts.phoneNumbers.create('account_id', {
       sip_trunk_id: 'sip_trunk_id',
@@ -22,7 +22,7 @@ describe('resource phoneNumbers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.phoneNumbers.create('account_id', {
       sip_trunk_id: 'sip_trunk_id',
@@ -32,7 +32,7 @@ describe('resource phoneNumbers', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.accounts.phoneNumbers.retrieve('phone_number_id', {
       account_id: 'account_id',
@@ -46,14 +46,14 @@ describe('resource phoneNumbers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.accounts.phoneNumbers.retrieve('phone_number_id', {
       account_id: 'account_id',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.accounts.phoneNumbers.update('phone_number_id', {
       account_id: 'account_id',
@@ -67,7 +67,7 @@ describe('resource phoneNumbers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.accounts.phoneNumbers.update('phone_number_id', {
       account_id: 'account_id',
@@ -78,7 +78,7 @@ describe('resource phoneNumbers', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.accounts.phoneNumbers.list('account_id');
     const rawResponse = await responsePromise.asResponse();
@@ -90,7 +90,7 @@ describe('resource phoneNumbers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -102,7 +102,7 @@ describe('resource phoneNumbers', () => {
     ).rejects.toThrow(Itellicoai.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.accounts.phoneNumbers.delete('phone_number_id', {
       account_id: 'account_id',
@@ -116,7 +116,7 @@ describe('resource phoneNumbers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.accounts.phoneNumbers.delete('phone_number_id', {
       account_id: 'account_id',

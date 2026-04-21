@@ -6,6 +6,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+ */
 export class Agents extends APIResource {
   /**
    * Create a new AI agent with specified configuration for voice conversations.
@@ -120,6 +123,17 @@ export interface AgentResponse {
    * Unique identifier for the account that owns this agent.
    */
   account_id: string;
+
+  /**
+   * Whether the AI may automatically end the call when the conversation has
+   * concluded.
+   */
+  allow_auto_hangup: boolean;
+
+  /**
+   * Whether callers may request that recording stop and captured audio be deleted.
+   */
+  allow_caller_recording_opt_out: boolean;
 
   /**
    * Configuration for ambient background sounds during the conversation.
@@ -662,6 +676,17 @@ export interface AgentCreateParams {
     | AgentCreateParams.ElevenLabsVoiceSchema;
 
   /**
+   * Whether the AI may automatically end the call when the conversation has
+   * concluded.
+   */
+  allow_auto_hangup?: boolean | null;
+
+  /**
+   * Whether callers may request that recording stop and captured audio be deleted.
+   */
+  allow_caller_recording_opt_out?: boolean | null;
+
+  /**
    * Configuration for ambient background sounds during the conversation
    */
   ambient_sound?: AmbientSound;
@@ -888,11 +913,6 @@ export namespace AgentCreateParams {
      */
     export interface Settings {
       /**
-       * Optimize streaming latency setting
-       */
-      optimize_streaming_latency?: number | null;
-
-      /**
        * Voice similarity boost setting
        */
       similarity_boost?: number | null;
@@ -926,9 +946,21 @@ export interface AgentRetrieveParams {
 
 export interface AgentUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   account_id: string;
+
+  /**
+   * Body param: Whether the AI may automatically end the call when the conversation
+   * has concluded.
+   */
+  allow_auto_hangup?: boolean | null;
+
+  /**
+   * Body param: Whether callers may request that recording stop and captured audio
+   * be deleted.
+   */
+  allow_caller_recording_opt_out?: boolean | null;
 
   /**
    * Body param: Configuration for ambient background sounds during the conversation
@@ -1038,6 +1070,11 @@ export interface AgentListParams {
    * Filter agents created before this datetime (ISO 8601, timezone-aware).
    */
   created_lt?: string | null;
+
+  /**
+   * When true, include archived agents alongside active ones.
+   */
+  include_archived?: boolean | null;
 
   /**
    * Filter by archived status. If omitted, archived are excluded by default.

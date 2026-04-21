@@ -8,7 +8,7 @@ const client = new Itellicoai({
 });
 
 describe('resource agents', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.agents.create('account_id', {
       model: { model: 'gpt-5-mini', provider: 'azure_openai' },
@@ -24,16 +24,25 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.agents.create('account_id', {
-      model: { model: 'gpt-5-mini', max_tokens: 1024, provider: 'azure_openai', temperature: 0.7 },
-      transcriber: { keywords: ['string'], language: 'multi', model: 'nova-3:general', provider: 'deepgram' },
+      model: {
+        model: 'gpt-5-mini',
+        max_tokens: 1024,
+        provider: 'azure_openai',
+        temperature: 0.7,
+      },
+      transcriber: {
+        keywords: ['string'],
+        language: 'multi',
+        model: 'nova-3:general',
+        provider: 'deepgram',
+      },
       voice: {
         voice_id: 'pMsXgVXv3BLzUgSXRplE',
         provider: 'elevenlabs',
         settings: {
-          optimize_streaming_latency: 0,
           similarity_boost: 0.7,
           speed: 0.7,
           stability: 0.7,
@@ -41,6 +50,8 @@ describe('resource agents', () => {
           use_speaker_boost: true,
         },
       },
+      allow_auto_hangup: true,
+      allow_caller_recording_opt_out: true,
       ambient_sound: { source: 'open_plan_office', volume: 0 },
       capture_settings: { recording_enabled: true },
       denoising: { telephony: true, web: true },
@@ -50,19 +61,32 @@ describe('resource agents', () => {
         reminder_timeout_ms: 5000,
         reset_on_activity: true,
       },
-      initial_message: { delay_ms: 0, interruptible: true, message: 'message', mode: 'fixed_message' },
-      interrupt_settings: { enabled: true, min_speech_seconds: 0, min_words: 0 },
+      initial_message: {
+        delay_ms: 0,
+        interruptible: true,
+        message: 'message',
+        mode: 'fixed_message',
+      },
+      interrupt_settings: {
+        enabled: true,
+        min_speech_seconds: 0,
+        min_words: 0,
+      },
       max_duration_seconds: 10,
       metadata: { foo: 'bar' },
       name: 'Customer Support Agent',
       note: 'note',
       response_timing: { min_endpointing_delay_seconds: 0 },
       tags: ['string'],
-      volume: { allow_adjustment: true, telephony: 0, web: 0 },
+      volume: {
+        allow_adjustment: true,
+        telephony: 0,
+        web: 0,
+      },
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.agents.retrieve('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -74,12 +98,12 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.agents.retrieve('agent_id', { account_id: 'account_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.agents.update('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -91,10 +115,12 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.agents.update('agent_id', {
       account_id: 'account_id',
+      allow_auto_hangup: true,
+      allow_caller_recording_opt_out: true,
       ambient_sound: { source: 'open_plan_office', volume: 0 },
       capture_settings: { recording_enabled: true },
       denoising: { telephony: true, web: true },
@@ -104,8 +130,17 @@ describe('resource agents', () => {
         reminder_timeout_ms: 5000,
         reset_on_activity: true,
       },
-      initial_message: { delay_ms: 0, interruptible: true, message: 'message', mode: 'fixed_message' },
-      interrupt_settings: { enabled: true, min_speech_seconds: 0, min_words: 0 },
+      initial_message: {
+        delay_ms: 0,
+        interruptible: true,
+        message: 'message',
+        mode: 'fixed_message',
+      },
+      interrupt_settings: {
+        enabled: true,
+        min_speech_seconds: 0,
+        min_words: 0,
+      },
       max_duration_seconds: 10,
       metadata: { foo: 'bar' },
       model: { foo: 'bar' },
@@ -115,11 +150,15 @@ describe('resource agents', () => {
       tags: ['string'],
       transcriber: { language: 'af-ZA', provider: 'azure' },
       voice: { foo: 'bar' },
-      volume: { allow_adjustment: true, telephony: 0, web: 0 },
+      volume: {
+        allow_adjustment: true,
+        telephony: 0,
+        web: 0,
+      },
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.agents.list('account_id');
     const rawResponse = await responsePromise.asResponse();
@@ -131,7 +170,7 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -142,6 +181,7 @@ describe('resource agents', () => {
           created_gt: '2019-12-27T18:11:19.117Z',
           created_le: '2019-12-27T18:11:19.117Z',
           created_lt: '2019-12-27T18:11:19.117Z',
+          include_archived: true,
           is_archived: true,
           limit: 1,
           modified_ge: '2019-12-27T18:11:19.117Z',
@@ -157,7 +197,7 @@ describe('resource agents', () => {
     ).rejects.toThrow(Itellicoai.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('archive: only required params', async () => {
     const responsePromise = client.agents.archive('agent_id', { account_id: 'account_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -169,7 +209,7 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('archive: required and optional params', async () => {
     const response = await client.agents.archive('agent_id', { account_id: 'account_id' });
   });
