@@ -490,9 +490,18 @@ export interface DeepgramTranscriber {
     | null;
 
   /**
+   * Optional Deepgram Flux multilingual language hints. Used with
+   * model='flux-general-multi'; omit or send an empty list to let Flux auto-detect
+   * across all supported languages.
+   */
+  languages?: Array<string> | null;
+
+  /**
    * Deepgram model to use (matches our YAML configuration)
    */
   model?:
+    | 'flux-general-en'
+    | 'flux-general-multi'
     | 'nova-3:general'
     | 'nova-3:medical'
     | 'nova-2:general'

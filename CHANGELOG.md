@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0 (2026-04-23)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/itellicoAI/server-sdk-typescript/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** api update ([c48abf1](https://github.com/itellicoAI/server-sdk-typescript/commit/c48abf164ed958d12b5b843092488e5eb49ab48f))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([4c683e9](https://github.com/itellicoAI/server-sdk-typescript/commit/4c683e94302c19221febc3330143ce16b86e3062))
+
 ## 1.1.0 (2026-04-21)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/itellicoAI/server-sdk-typescript/compare/v1.0.0...v1.1.0)
