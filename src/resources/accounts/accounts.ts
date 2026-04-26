@@ -5,46 +5,13 @@ import * as AccountsAPI from './accounts';
 import * as AnalyticsAPI from './analytics';
 import { Analytics, AnalyticsGetUsageParams, AnalyticsGetUsageResponse, UsageGroupBy } from './analytics';
 import * as PhoneNumbersAPI from './phone-numbers';
-import {
-  PhoneNumber,
-  PhoneNumberCreateParams,
-  PhoneNumberDeleteParams,
-  PhoneNumberListParams,
-  PhoneNumberListResponse,
-  PhoneNumberRetrieveParams,
-  PhoneNumberUpdateParams,
-  PhoneNumbers,
-} from './phone-numbers';
+import { PhoneNumber, PhoneNumberCreateParams, PhoneNumberDeleteParams, PhoneNumberListParams, PhoneNumberListResponse, PhoneNumberRetrieveParams, PhoneNumberUpdateParams, PhoneNumbers } from './phone-numbers';
 import * as ProvidersAPI from './providers';
-import {
-  ModelCatalogProvider,
-  ModelRange,
-  ProviderListModelsResponse,
-  ProviderListTranscribersResponse,
-  ProviderListVoicesParams,
-  ProviderListVoicesResponse,
-  Providers,
-} from './providers';
+import { ModelCatalogProvider, ModelRange, ProviderListModelsResponse, ProviderListTranscribersResponse, ProviderListVoicesParams, ProviderListVoicesResponse, Providers } from './providers';
 import * as SipTrunksAPI from './sip-trunks';
-import {
-  SipTrunk,
-  SipTrunkCreateParams,
-  SipTrunkDeleteParams,
-  SipTrunkListParams,
-  SipTrunkListResponse,
-  SipTrunkRetrieveParams,
-  SipTrunkUpdateParams,
-  SipTrunks,
-} from './sip-trunks';
+import { SipTrunk, SipTrunkCreateParams, SipTrunkDeleteParams, SipTrunkListParams, SipTrunkListResponse, SipTrunkRetrieveParams, SipTrunkUpdateParams, SipTrunks } from './sip-trunks';
 import * as SubaccountsAPI from './subaccounts';
-import {
-  SubaccountCreateParams,
-  SubaccountListParams,
-  SubaccountListResponse,
-  SubaccountRetrieveParams,
-  SubaccountUpdateParams,
-  Subaccounts,
-} from './subaccounts';
+import { SubaccountCreateParams, SubaccountListParams, SubaccountListResponse, SubaccountRetrieveParams, SubaccountUpdateParams, Subaccounts } from './subaccounts';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -59,11 +26,7 @@ export class Accounts extends APIResource {
   /**
    * Paginated list of conversations for the specified account and its subaccounts.
    */
-  listConversations(
-    accountID: string,
-    query: AccountListConversationsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AccountListConversationsResponse> {
+  listConversations(accountID: string, query: AccountListConversationsParams | null | undefined = {}, options?: RequestOptions): APIPromise<AccountListConversationsResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/conversations`, { query, ...options });
   }
 
@@ -113,17 +76,17 @@ export interface Account {
 /**
  * Directionality of a conversation.
  */
-export type ConversationDirection = 'inbound' | 'outbound' | 'internal';
+export type ConversationDirection = 'inbound' | 'outbound' | 'internal'
 
 /**
  * High-level lifecycle statuses reported by the conversations API.
  */
-export type ConversationStatus = 'in_progress' | 'completed' | 'failed' | 'transferred';
+export type ConversationStatus = 'in_progress' | 'completed' | 'failed' | 'transferred'
 
 /**
  * High-level conversation types exposed via the v1 API.
  */
-export type ConversationType = 'phone' | 'web' | 'test' | 'unknown';
+export type ConversationType = 'phone' | 'web' | 'test' | 'unknown'
 
 export interface AccountListConversationsResponse {
   count: number;
@@ -171,13 +134,7 @@ export namespace AccountListConversationsResponse {
 
     duration_seconds?: number | null;
 
-    messages?: Array<
-      | Item.UserMessageSchema
-      | Item.AgentMessageSchema
-      | Item.SystemMessageSchema
-      | Item.ToolMessageSchema
-      | Item.EventMessageSchema
-    >;
+    messages?: Array<Item.UserMessageSchema | Item.AgentMessageSchema | Item.SystemMessageSchema | Item.ToolMessageSchema | Item.EventMessageSchema>;
 
     /**
      * Agent-side phone number when the type is phone.
@@ -319,7 +276,7 @@ export declare namespace Accounts {
     type ConversationStatus as ConversationStatus,
     type ConversationType as ConversationType,
     type AccountListConversationsResponse as AccountListConversationsResponse,
-    type AccountListConversationsParams as AccountListConversationsParams,
+    type AccountListConversationsParams as AccountListConversationsParams
   };
 
   export {
@@ -328,7 +285,7 @@ export declare namespace Accounts {
     type SubaccountCreateParams as SubaccountCreateParams,
     type SubaccountRetrieveParams as SubaccountRetrieveParams,
     type SubaccountUpdateParams as SubaccountUpdateParams,
-    type SubaccountListParams as SubaccountListParams,
+    type SubaccountListParams as SubaccountListParams
   };
 
   export {
@@ -338,7 +295,7 @@ export declare namespace Accounts {
     type ProviderListModelsResponse as ProviderListModelsResponse,
     type ProviderListTranscribersResponse as ProviderListTranscribersResponse,
     type ProviderListVoicesResponse as ProviderListVoicesResponse,
-    type ProviderListVoicesParams as ProviderListVoicesParams,
+    type ProviderListVoicesParams as ProviderListVoicesParams
   };
 
   export {
@@ -349,7 +306,7 @@ export declare namespace Accounts {
     type PhoneNumberRetrieveParams as PhoneNumberRetrieveParams,
     type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
     type PhoneNumberListParams as PhoneNumberListParams,
-    type PhoneNumberDeleteParams as PhoneNumberDeleteParams,
+    type PhoneNumberDeleteParams as PhoneNumberDeleteParams
   };
 
   export {
@@ -360,13 +317,13 @@ export declare namespace Accounts {
     type SipTrunkRetrieveParams as SipTrunkRetrieveParams,
     type SipTrunkUpdateParams as SipTrunkUpdateParams,
     type SipTrunkListParams as SipTrunkListParams,
-    type SipTrunkDeleteParams as SipTrunkDeleteParams,
+    type SipTrunkDeleteParams as SipTrunkDeleteParams
   };
 
   export {
     Analytics as Analytics,
     type UsageGroupBy as UsageGroupBy,
     type AnalyticsGetUsageResponse as AnalyticsGetUsageResponse,
-    type AnalyticsGetUsageParams as AnalyticsGetUsageParams,
+    type AnalyticsGetUsageParams as AnalyticsGetUsageParams
   };
 }
