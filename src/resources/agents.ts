@@ -589,7 +589,7 @@ export namespace AgentCreateParams {
     /**
      * The Anthropic model to use.
      */
-    model: 'claude-sonnet-4-20250514' | 'claude-3-7-sonnet-20250219' | 'claude-3-5-haiku-20241022';
+    model: string;
 
     /**
      * Max number of tokens the agent will be allowed to generate in each turn. Default
