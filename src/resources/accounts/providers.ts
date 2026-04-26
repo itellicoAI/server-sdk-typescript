@@ -25,10 +25,7 @@ export class Providers extends APIResource {
    * includes its code, name, EU-hosted flag, and models with id, name, description,
    * and supported_languages (code/name).
    */
-  listTranscribers(
-    accountID: string,
-    options?: RequestOptions,
-  ): APIPromise<ProviderListTranscribersResponse> {
+  listTranscribers(accountID: string, options?: RequestOptions): APIPromise<ProviderListTranscribersResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/providers/transcribers`, options);
   }
 
@@ -37,11 +34,7 @@ export class Providers extends APIResource {
    * (language, gender, search). Returns live data from voice providers like
    * ElevenLabs, Azure Speech, and Cartesia.
    */
-  listVoices(
-    accountID: string,
-    query: ProviderListVoicesParams,
-    options?: RequestOptions,
-  ): APIPromise<ProviderListVoicesResponse> {
+  listVoices(accountID: string, query: ProviderListVoicesParams, options?: RequestOptions): APIPromise<ProviderListVoicesResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/providers/voices`, { query, ...options });
   }
 }
@@ -86,7 +79,7 @@ export interface ModelRange {
   min?: number | null;
 }
 
-export type ProviderListModelsResponse = Array<ProviderListModelsResponse.ProviderListModelsResponseItem>;
+export type ProviderListModelsResponse = Array<ProviderListModelsResponse.ProviderListModelsResponseItem>
 
 export namespace ProviderListModelsResponse {
   /**
@@ -201,8 +194,7 @@ export namespace ProviderListModelsResponse {
   }
 }
 
-export type ProviderListTranscribersResponse =
-  Array<ProviderListTranscribersResponse.ProviderListTranscribersResponseItem>;
+export type ProviderListTranscribersResponse = Array<ProviderListTranscribersResponse.ProviderListTranscribersResponseItem>
 
 export namespace ProviderListTranscribersResponse {
   export interface ProviderListTranscribersResponseItem {
@@ -253,7 +245,7 @@ export namespace ProviderListTranscribersResponse {
   }
 }
 
-export type ProviderListVoicesResponse = { [key: string]: unknown };
+export type ProviderListVoicesResponse = { [key: string]: unknown }
 
 export interface ProviderListVoicesParams {
   /**
@@ -294,6 +286,6 @@ export declare namespace Providers {
     type ProviderListModelsResponse as ProviderListModelsResponse,
     type ProviderListTranscribersResponse as ProviderListTranscribersResponse,
     type ProviderListVoicesResponse as ProviderListVoicesResponse,
-    type ProviderListVoicesParams as ProviderListVoicesParams,
+    type ProviderListVoicesParams as ProviderListVoicesParams
   };
 }

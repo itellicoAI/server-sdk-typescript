@@ -2,10 +2,7 @@
 
 import Itellicoai from 'itellicoai';
 
-const client = new Itellicoai({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Itellicoai({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource analytics', () => {
   // Mock server tests are disabled
@@ -23,19 +20,15 @@ describe('resource analytics', () => {
   // Mock server tests are disabled
   test.skip('getUsage: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.accounts.analytics.getUsage(
-        'account_id',
-        {
-          end: '2019-12-27T18:11:19.117Z',
-          granularity: 'hour',
-          group_by: ['agent'],
-          limit: 1,
-          start: '2019-12-27T18:11:19.117Z',
-          tz: 'tz',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Itellicoai.NotFoundError);
+    await expect(client.accounts.analytics.getUsage('account_id', {
+    end: '2019-12-27T18:11:19.117Z',
+    granularity: 'hour',
+    group_by: ['agent'],
+    limit: 1,
+    start: '2019-12-27T18:11:19.117Z',
+    tz: 'tz',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Itellicoai.NotFoundError);
   });
 });

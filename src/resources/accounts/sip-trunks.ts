@@ -21,12 +21,8 @@ export class SipTrunks extends APIResource {
   /**
    * Fetch a single SIP trunk by ID for the specified account.
    */
-  retrieve(
-    sipTrunkID: string,
-    params: SipTrunkRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<SipTrunk> {
-    const { account_id } = params;
+  retrieve(sipTrunkID: string, params: SipTrunkRetrieveParams, options?: RequestOptions): APIPromise<SipTrunk> {
+    const { account_id } = params
     return this._client.get(path`/v1/accounts/${account_id}/sip-trunks/${sipTrunkID}`, options);
   }
 
@@ -34,21 +30,14 @@ export class SipTrunks extends APIResource {
    * Update BYOC SIP trunk properties and allowed IPs.
    */
   update(sipTrunkID: string, params: SipTrunkUpdateParams, options?: RequestOptions): APIPromise<SipTrunk> {
-    const { account_id, ...body } = params;
-    return this._client.patch(path`/v1/accounts/${account_id}/sip-trunks/${sipTrunkID}`, {
-      body,
-      ...options,
-    });
+    const { account_id, ...body } = params
+    return this._client.patch(path`/v1/accounts/${account_id}/sip-trunks/${sipTrunkID}`, { body, ...options });
   }
 
   /**
    * Paginated list of SIP trunks for the specified account.
    */
-  list(
-    accountID: string,
-    query: SipTrunkListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<SipTrunkListResponse> {
+  list(accountID: string, query: SipTrunkListParams | null | undefined = {}, options?: RequestOptions): APIPromise<SipTrunkListResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/sip-trunks`, { query, ...options });
   }
 
@@ -56,11 +45,8 @@ export class SipTrunks extends APIResource {
    * Delete a SIP trunk that has no associated phone numbers.
    */
   delete(sipTrunkID: string, params: SipTrunkDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { account_id } = params;
-    return this._client.delete(path`/v1/accounts/${account_id}/sip-trunks/${sipTrunkID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { account_id } = params
+    return this._client.delete(path`/v1/accounts/${account_id}/sip-trunks/${sipTrunkID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -156,6 +142,6 @@ export declare namespace SipTrunks {
     type SipTrunkRetrieveParams as SipTrunkRetrieveParams,
     type SipTrunkUpdateParams as SipTrunkUpdateParams,
     type SipTrunkListParams as SipTrunkListParams,
-    type SipTrunkDeleteParams as SipTrunkDeleteParams,
+    type SipTrunkDeleteParams as SipTrunkDeleteParams
   };
 }

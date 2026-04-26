@@ -15,11 +15,7 @@ export class Analytics extends APIResource {
    * time ranges, bucket granularity, and optional groupings by agent, subaccount, or
    * conversation type.
    */
-  getUsage(
-    accountID: string,
-    query: AnalyticsGetUsageParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AnalyticsGetUsageResponse> {
+  getUsage(accountID: string, query: AnalyticsGetUsageParams | null | undefined = {}, options?: RequestOptions): APIPromise<AnalyticsGetUsageResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/analytics/usage`, { query, ...options });
   }
 }
@@ -30,7 +26,7 @@ export class Analytics extends APIResource {
  * Attributes: AGENT: Group by individual agent. SUBACCOUNT: Group by subaccount
  * (child team). TYPE: Group by conversation type.
  */
-export type UsageGroupBy = 'agent' | 'subaccount' | 'type';
+export type UsageGroupBy = 'agent' | 'subaccount' | 'type'
 
 /**
  * Complete usage analytics response payload.
@@ -168,6 +164,6 @@ export declare namespace Analytics {
   export {
     type UsageGroupBy as UsageGroupBy,
     type AnalyticsGetUsageResponse as AnalyticsGetUsageResponse,
-    type AnalyticsGetUsageParams as AnalyticsGetUsageParams,
+    type AnalyticsGetUsageParams as AnalyticsGetUsageParams
   };
 }
