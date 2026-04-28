@@ -14,30 +14,49 @@ export class Subaccounts extends APIResource {
    * Create a new subaccount under the specified parent account. The creator becomes
    * OWNER of the new subaccount.
    */
-  create(accountID: string, body: SubaccountCreateParams, options?: RequestOptions): APIPromise<AccountsAPI.Account> {
+  create(
+    accountID: string,
+    body: SubaccountCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<AccountsAPI.Account> {
     return this._client.post(path`/v1/accounts/${accountID}/subaccounts`, { body, ...options });
   }
 
   /**
    * Fetch a specific subaccount by ID under the specified parent account.
    */
-  retrieve(subaccountID: string, params: SubaccountRetrieveParams, options?: RequestOptions): APIPromise<AccountsAPI.Account> {
-    const { account_id } = params
+  retrieve(
+    subaccountID: string,
+    params: SubaccountRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<AccountsAPI.Account> {
+    const { account_id } = params;
     return this._client.get(path`/v1/accounts/${account_id}/subaccounts/${subaccountID}`, options);
   }
 
   /**
    * Update subaccount properties such as name.
    */
-  update(subaccountID: string, params: SubaccountUpdateParams, options?: RequestOptions): APIPromise<AccountsAPI.Account> {
-    const { account_id, ...body } = params
-    return this._client.patch(path`/v1/accounts/${account_id}/subaccounts/${subaccountID}`, { body, ...options });
+  update(
+    subaccountID: string,
+    params: SubaccountUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<AccountsAPI.Account> {
+    const { account_id, ...body } = params;
+    return this._client.patch(path`/v1/accounts/${account_id}/subaccounts/${subaccountID}`, {
+      body,
+      ...options,
+    });
   }
 
   /**
    * Paginated list of child accounts directly under the specified parent account.
    */
-  list(accountID: string, query: SubaccountListParams | null | undefined = {}, options?: RequestOptions): APIPromise<SubaccountListResponse> {
+  list(
+    accountID: string,
+    query: SubaccountListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SubaccountListResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/subaccounts`, { query, ...options });
   }
 }
@@ -93,6 +112,6 @@ export declare namespace Subaccounts {
     type SubaccountCreateParams as SubaccountCreateParams,
     type SubaccountRetrieveParams as SubaccountRetrieveParams,
     type SubaccountUpdateParams as SubaccountUpdateParams,
-    type SubaccountListParams as SubaccountListParams
+    type SubaccountListParams as SubaccountListParams,
   };
 }

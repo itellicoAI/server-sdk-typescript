@@ -46,8 +46,12 @@ export class Agents extends APIResource {
    * );
    * ```
    */
-  retrieve(agentID: string, params: AgentRetrieveParams, options?: RequestOptions): APIPromise<AgentResponse> {
-    const { account_id } = params
+  retrieve(
+    agentID: string,
+    params: AgentRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<AgentResponse> {
+    const { account_id } = params;
     return this._client.get(path`/v1/accounts/${account_id}/agents/${agentID}`, options);
   }
 
@@ -64,7 +68,7 @@ export class Agents extends APIResource {
    * ```
    */
   update(agentID: string, params: AgentUpdateParams, options?: RequestOptions): APIPromise<AgentResponse> {
-    const { account_id, ...body } = params
+    const { account_id, ...body } = params;
     return this._client.patch(path`/v1/accounts/${account_id}/agents/${agentID}`, { body, ...options });
   }
 
@@ -77,7 +81,11 @@ export class Agents extends APIResource {
    * const agents = await client.agents.list('account_id');
    * ```
    */
-  list(accountID: string, query: AgentListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AgentListResponse> {
+  list(
+    accountID: string,
+    query: AgentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentListResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/agents`, { query, ...options });
   }
 
@@ -93,8 +101,11 @@ export class Agents extends APIResource {
    * ```
    */
   archive(agentID: string, params: AgentArchiveParams, options?: RequestOptions): APIPromise<void> {
-    const { account_id } = params
-    return this._client.delete(path`/v1/accounts/${account_id}/agents/${agentID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    const { account_id } = params;
+    return this._client.delete(path`/v1/accounts/${account_id}/agents/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -224,7 +235,14 @@ export interface AmbientSound {
   /**
    * Available ambient background sounds to enhance conversation realism
    */
-  source?: 'open_plan_office' | 'customer_service_center' | 'internet_cafe' | 'urban_street' | 'rural_outdoors' | 'ac_fan' | null;
+  source?:
+    | 'open_plan_office'
+    | 'customer_service_center'
+    | 'internet_cafe'
+    | 'urban_street'
+    | 'rural_outdoors'
+    | 'ac_fan'
+    | null;
 
   /**
    * Controls the volume of the ambient sound. Value ranging from [0.0, 1.0]. 0.0 is
@@ -241,7 +259,151 @@ export interface AzureTranscriber {
    * Language for transcription (see Azure Speech Service docs for supported
    * languages)
    */
-  language?: 'af-ZA' | 'am-ET' | 'ar-AE' | 'ar-BH' | 'ar-DZ' | 'ar-EG' | 'ar-IL' | 'ar-IQ' | 'ar-JO' | 'ar-KW' | 'ar-LB' | 'ar-LY' | 'ar-MA' | 'ar-OM' | 'ar-PS' | 'ar-QA' | 'ar-SA' | 'ar-SY' | 'ar-TN' | 'ar-YE' | 'az-AZ' | 'bg-BG' | 'bn-IN' | 'bs-BA' | 'ca-ES' | 'cs-CZ' | 'cy-GB' | 'da-DK' | 'de-AT' | 'de-CH' | 'de-DE' | 'el-GR' | 'en-AU' | 'en-CA' | 'en-GB' | 'en-GH' | 'en-HK' | 'en-IE' | 'en-IN' | 'en-KE' | 'en-NG' | 'en-NZ' | 'en-PH' | 'en-SG' | 'en-TZ' | 'en-US' | 'en-ZA' | 'es-AR' | 'es-BO' | 'es-CL' | 'es-CO' | 'es-CR' | 'es-CU' | 'es-DO' | 'es-EC' | 'es-ES' | 'es-GQ' | 'es-GT' | 'es-HN' | 'es-MX' | 'es-NI' | 'es-PA' | 'es-PE' | 'es-PR' | 'es-PY' | 'es-SV' | 'es-US' | 'es-UY' | 'es-VE' | 'et-EE' | 'eu-ES' | 'fa-IR' | 'fi-FI' | 'fil-PH' | 'fr-BE' | 'fr-CA' | 'fr-CH' | 'fr-FR' | 'ga-IE' | 'gl-ES' | 'gu-IN' | 'he-IL' | 'hi-IN' | 'hr-HR' | 'hu-HU' | 'hy-AM' | 'id-ID' | 'is-IS' | 'it-CH' | 'it-IT' | 'ja-JP' | 'jv-ID' | 'ka-GE' | 'kk-KZ' | 'km-KH' | 'kn-IN' | 'ko-KR' | 'lo-LA' | 'lt-LT' | 'lv-LV' | 'mk-MK' | 'ml-IN' | 'mn-MN' | 'mr-IN' | 'ms-MY' | 'mt-MT' | 'my-MM' | 'nb-NO' | 'ne-NP' | 'nl-BE' | 'nl-NL' | 'pa-IN' | 'pl-PL' | 'ps-AF' | 'pt-BR' | 'pt-PT' | 'ro-RO' | 'ru-RU' | 'si-LK' | 'sk-SK' | 'sl-SI' | 'so-SO' | 'sq-AL' | 'sr-RS' | 'sv-SE' | 'sw-KE' | 'sw-TZ' | 'ta-IN' | 'te-IN' | 'th-TH' | 'tr-TR' | 'uk-UA' | 'ur-IN' | 'uz-UZ' | 'vi-VN' | 'wuu-CN' | 'yue-CN' | 'zh-CN' | 'zh-CN-shandong' | 'zh-CN-sichuan' | 'zh-HK' | 'zh-TW' | 'zu-ZA' | null;
+  language?:
+    | 'af-ZA'
+    | 'am-ET'
+    | 'ar-AE'
+    | 'ar-BH'
+    | 'ar-DZ'
+    | 'ar-EG'
+    | 'ar-IL'
+    | 'ar-IQ'
+    | 'ar-JO'
+    | 'ar-KW'
+    | 'ar-LB'
+    | 'ar-LY'
+    | 'ar-MA'
+    | 'ar-OM'
+    | 'ar-PS'
+    | 'ar-QA'
+    | 'ar-SA'
+    | 'ar-SY'
+    | 'ar-TN'
+    | 'ar-YE'
+    | 'az-AZ'
+    | 'bg-BG'
+    | 'bn-IN'
+    | 'bs-BA'
+    | 'ca-ES'
+    | 'cs-CZ'
+    | 'cy-GB'
+    | 'da-DK'
+    | 'de-AT'
+    | 'de-CH'
+    | 'de-DE'
+    | 'el-GR'
+    | 'en-AU'
+    | 'en-CA'
+    | 'en-GB'
+    | 'en-GH'
+    | 'en-HK'
+    | 'en-IE'
+    | 'en-IN'
+    | 'en-KE'
+    | 'en-NG'
+    | 'en-NZ'
+    | 'en-PH'
+    | 'en-SG'
+    | 'en-TZ'
+    | 'en-US'
+    | 'en-ZA'
+    | 'es-AR'
+    | 'es-BO'
+    | 'es-CL'
+    | 'es-CO'
+    | 'es-CR'
+    | 'es-CU'
+    | 'es-DO'
+    | 'es-EC'
+    | 'es-ES'
+    | 'es-GQ'
+    | 'es-GT'
+    | 'es-HN'
+    | 'es-MX'
+    | 'es-NI'
+    | 'es-PA'
+    | 'es-PE'
+    | 'es-PR'
+    | 'es-PY'
+    | 'es-SV'
+    | 'es-US'
+    | 'es-UY'
+    | 'es-VE'
+    | 'et-EE'
+    | 'eu-ES'
+    | 'fa-IR'
+    | 'fi-FI'
+    | 'fil-PH'
+    | 'fr-BE'
+    | 'fr-CA'
+    | 'fr-CH'
+    | 'fr-FR'
+    | 'ga-IE'
+    | 'gl-ES'
+    | 'gu-IN'
+    | 'he-IL'
+    | 'hi-IN'
+    | 'hr-HR'
+    | 'hu-HU'
+    | 'hy-AM'
+    | 'id-ID'
+    | 'is-IS'
+    | 'it-CH'
+    | 'it-IT'
+    | 'ja-JP'
+    | 'jv-ID'
+    | 'ka-GE'
+    | 'kk-KZ'
+    | 'km-KH'
+    | 'kn-IN'
+    | 'ko-KR'
+    | 'lo-LA'
+    | 'lt-LT'
+    | 'lv-LV'
+    | 'mk-MK'
+    | 'ml-IN'
+    | 'mn-MN'
+    | 'mr-IN'
+    | 'ms-MY'
+    | 'mt-MT'
+    | 'my-MM'
+    | 'nb-NO'
+    | 'ne-NP'
+    | 'nl-BE'
+    | 'nl-NL'
+    | 'pa-IN'
+    | 'pl-PL'
+    | 'ps-AF'
+    | 'pt-BR'
+    | 'pt-PT'
+    | 'ro-RO'
+    | 'ru-RU'
+    | 'si-LK'
+    | 'sk-SK'
+    | 'sl-SI'
+    | 'so-SO'
+    | 'sq-AL'
+    | 'sr-RS'
+    | 'sv-SE'
+    | 'sw-KE'
+    | 'sw-TZ'
+    | 'ta-IN'
+    | 'te-IN'
+    | 'th-TH'
+    | 'tr-TR'
+    | 'uk-UA'
+    | 'ur-IN'
+    | 'uz-UZ'
+    | 'vi-VN'
+    | 'wuu-CN'
+    | 'yue-CN'
+    | 'zh-CN'
+    | 'zh-CN-shandong'
+    | 'zh-CN-sichuan'
+    | 'zh-HK'
+    | 'zh-TW'
+    | 'zu-ZA'
+    | null;
 
   provider?: 'azure';
 }
@@ -268,7 +430,64 @@ export interface DeepgramTranscriber {
   /**
    * Language for transcription (see Deepgram docs for supported languages)
    */
-  language?: 'bg' | 'ca' | 'cs' | 'da' | 'da-DK' | 'de' | 'de-CH' | 'el' | 'en' | 'en-AU' | 'en-GB' | 'en-IN' | 'en-NZ' | 'en-US' | 'es' | 'es-419' | 'es-LATAM' | 'et' | 'fi' | 'fr' | 'fr-CA' | 'hi' | 'hi-Latn' | 'hu' | 'id' | 'it' | 'ja' | 'ko' | 'ko-KR' | 'lt' | 'lv' | 'ms' | 'multi' | 'nl' | 'nl-BE' | 'no' | 'pl' | 'pt' | 'pt-BR' | 'ro' | 'ru' | 'sk' | 'sv' | 'sv-SE' | 'ta' | 'taq' | 'th' | 'th-TH' | 'tr' | 'uk' | 'vi' | 'zh' | 'zh-CN' | 'zh-Hans' | 'zh-Hant' | 'zh-TW' | null;
+  language?:
+    | 'bg'
+    | 'ca'
+    | 'cs'
+    | 'da'
+    | 'da-DK'
+    | 'de'
+    | 'de-CH'
+    | 'el'
+    | 'en'
+    | 'en-AU'
+    | 'en-GB'
+    | 'en-IN'
+    | 'en-NZ'
+    | 'en-US'
+    | 'es'
+    | 'es-419'
+    | 'es-LATAM'
+    | 'et'
+    | 'fi'
+    | 'fr'
+    | 'fr-CA'
+    | 'hi'
+    | 'hi-Latn'
+    | 'hu'
+    | 'id'
+    | 'it'
+    | 'ja'
+    | 'ko'
+    | 'ko-KR'
+    | 'lt'
+    | 'lv'
+    | 'ms'
+    | 'multi'
+    | 'nl'
+    | 'nl-BE'
+    | 'no'
+    | 'pl'
+    | 'pt'
+    | 'pt-BR'
+    | 'ro'
+    | 'ru'
+    | 'sk'
+    | 'sv'
+    | 'sv-SE'
+    | 'ta'
+    | 'taq'
+    | 'th'
+    | 'th-TH'
+    | 'tr'
+    | 'uk'
+    | 'vi'
+    | 'zh'
+    | 'zh-CN'
+    | 'zh-Hans'
+    | 'zh-Hant'
+    | 'zh-TW'
+    | null;
 
   /**
    * Optional Deepgram Flux multilingual language hints. Used with
@@ -280,7 +499,16 @@ export interface DeepgramTranscriber {
   /**
    * Deepgram model to use (matches our YAML configuration)
    */
-  model?: 'flux-general-en' | 'flux-general-multi' | 'nova-3:general' | 'nova-3:medical' | 'nova-2:general' | 'nova-2:phonecall' | 'nova-2:meeting' | 'nova-2:conversationalai' | null;
+  model?:
+    | 'flux-general-en'
+    | 'flux-general-multi'
+    | 'nova-3:general'
+    | 'nova-3:medical'
+    | 'nova-2:general'
+    | 'nova-2:phonecall'
+    | 'nova-2:meeting'
+    | 'nova-2:conversationalai'
+    | null;
 
   provider?: 'deepgram';
 }
@@ -436,7 +664,10 @@ export interface AgentCreateParams {
    * Model configuration for the agent. Defines which AI model to use (OpenAI GPT-4,
    * Anthropic Claude, etc.) and its parameters like temperature and max tokens.
    */
-  model: AgentCreateParams.OpenAIModelSchema | AgentCreateParams.AzureOpenAIModelSchema | AgentCreateParams.AnthropicModelSchema;
+  model:
+    | AgentCreateParams.OpenAIModelSchema
+    | AgentCreateParams.AzureOpenAIModelSchema
+    | AgentCreateParams.AnthropicModelSchema;
 
   /**
    * Transcriber (speech-to-text) configuration for the agent. Defines which
@@ -448,7 +679,10 @@ export interface AgentCreateParams {
    * Voice (text-to-speech) configuration for the agent. Defines which provider and
    * voice to use (OpenAI, ElevenLabs, Cartesia, Azure) with voice-specific settings.
    */
-  voice: AgentCreateParams.AzureVoiceSchema | AgentCreateParams.CartesiaVoiceSchema | AgentCreateParams.ElevenLabsVoiceSchema;
+  voice:
+    | AgentCreateParams.AzureVoiceSchema
+    | AgentCreateParams.CartesiaVoiceSchema
+    | AgentCreateParams.ElevenLabsVoiceSchema;
 
   /**
    * Whether the AI may automatically end the call when the conversation has
@@ -543,7 +777,15 @@ export namespace AgentCreateParams {
     /**
      * The OpenAI model to use.
      */
-    model: 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-4o' | 'gpt-4o-mini';
+    model:
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
+      | 'gpt-4.1'
+      | 'gpt-4.1-mini'
+      | 'gpt-4.1-nano'
+      | 'gpt-4o'
+      | 'gpt-4o-mini';
 
     /**
      * Max number of tokens the agent will be allowed to generate in each turn. Default
@@ -566,7 +808,14 @@ export namespace AgentCreateParams {
     /**
      * The Azure OpenAI model to use.
      */
-    model: 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-4.1-2025-04-14' | 'gpt-4.1-mini-2025-04-14' | 'gpt-4.1-nano-2025-04-14' | 'gpt-4o-2024-11-20' | 'gpt-4o-mini-2024-07-18';
+    model:
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
+      | 'gpt-4.1-2025-04-14'
+      | 'gpt-4.1-mini-2025-04-14'
+      | 'gpt-4.1-nano-2025-04-14'
+      | 'gpt-4o-2024-11-20'
+      | 'gpt-4o-mini-2024-07-18';
 
     /**
      * Max number of tokens the agent will be allowed to generate in each turn. Default
@@ -629,7 +878,23 @@ export namespace AgentCreateParams {
     /**
      * Language to use (defaults to correct language for voiceId)
      */
-    language?: 'en' | 'es' | 'fr' | 'de' | 'pt' | 'zh' | 'ja' | 'hi' | 'it' | 'ko' | 'nl' | 'pl' | 'ru' | 'sv' | 'tr' | null;
+    language?:
+      | 'en'
+      | 'es'
+      | 'fr'
+      | 'de'
+      | 'pt'
+      | 'zh'
+      | 'ja'
+      | 'hi'
+      | 'it'
+      | 'ko'
+      | 'nl'
+      | 'pl'
+      | 'ru'
+      | 'sv'
+      | 'tr'
+      | null;
 
     provider?: 'cartesia';
   }
@@ -882,6 +1147,6 @@ export declare namespace Agents {
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
-    type AgentArchiveParams as AgentArchiveParams
+    type AgentArchiveParams as AgentArchiveParams,
   };
 }
