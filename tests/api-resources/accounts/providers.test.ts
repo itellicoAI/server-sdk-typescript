@@ -2,7 +2,10 @@
 
 import Itellicoai from 'itellicoai';
 
-const client = new Itellicoai({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Itellicoai({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource providers', () => {
   // Mock server tests are disabled
@@ -44,12 +47,12 @@ describe('resource providers', () => {
   // Mock server tests are disabled
   test.skip('listVoices: required and optional params', async () => {
     const response = await client.accounts.providers.listVoices('account_id', {
-    provider: 'provider',
-    gender: 'gender',
-    language: 'language',
-    limit: 0,
-    refresh: true,
-    search: 'search',
-  });
+      provider: 'provider',
+      gender: 'gender',
+      language: 'language',
+      limit: 0,
+      refresh: true,
+      search: 'search',
+    });
   });
 });

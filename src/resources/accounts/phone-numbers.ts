@@ -14,15 +14,23 @@ export class PhoneNumbers extends APIResource {
    * Create a phone number attached to a SIP trunk. LiveKit trunks are synchronized
    * automatically; FusionPBX linking is performed when applicable.
    */
-  create(accountID: string, body: PhoneNumberCreateParams, options?: RequestOptions): APIPromise<PhoneNumber> {
+  create(
+    accountID: string,
+    body: PhoneNumberCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumber> {
     return this._client.post(path`/v1/accounts/${accountID}/phone-numbers`, { body, ...options });
   }
 
   /**
    * Fetch a single phone number by ID for the specified account.
    */
-  retrieve(phoneNumberID: string, params: PhoneNumberRetrieveParams, options?: RequestOptions): APIPromise<PhoneNumber> {
-    const { account_id } = params
+  retrieve(
+    phoneNumberID: string,
+    params: PhoneNumberRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumber> {
+    const { account_id } = params;
     return this._client.get(path`/v1/accounts/${account_id}/phone-numbers/${phoneNumberID}`, options);
   }
 
@@ -30,15 +38,26 @@ export class PhoneNumbers extends APIResource {
    * Update a phone number's E.164 value, name, SIP trunk link, or inbound agent
    * assignment.
    */
-  update(phoneNumberID: string, params: PhoneNumberUpdateParams, options?: RequestOptions): APIPromise<PhoneNumber> {
-    const { account_id, ...body } = params
-    return this._client.patch(path`/v1/accounts/${account_id}/phone-numbers/${phoneNumberID}`, { body, ...options });
+  update(
+    phoneNumberID: string,
+    params: PhoneNumberUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumber> {
+    const { account_id, ...body } = params;
+    return this._client.patch(path`/v1/accounts/${account_id}/phone-numbers/${phoneNumberID}`, {
+      body,
+      ...options,
+    });
   }
 
   /**
    * Paginated list of phone numbers owned by the specified account.
    */
-  list(accountID: string, query: PhoneNumberListParams | null | undefined = {}, options?: RequestOptions): APIPromise<PhoneNumberListResponse> {
+  list(
+    accountID: string,
+    query: PhoneNumberListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumberListResponse> {
     return this._client.get(path`/v1/accounts/${accountID}/phone-numbers`, { query, ...options });
   }
 
@@ -48,8 +67,11 @@ export class PhoneNumbers extends APIResource {
    * route is unlinked first.
    */
   delete(phoneNumberID: string, params: PhoneNumberDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { account_id } = params
-    return this._client.delete(path`/v1/accounts/${account_id}/phone-numbers/${phoneNumberID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    const { account_id } = params;
+    return this._client.delete(path`/v1/accounts/${account_id}/phone-numbers/${phoneNumberID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -171,6 +193,6 @@ export declare namespace PhoneNumbers {
     type PhoneNumberRetrieveParams as PhoneNumberRetrieveParams,
     type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
     type PhoneNumberListParams as PhoneNumberListParams,
-    type PhoneNumberDeleteParams as PhoneNumberDeleteParams
+    type PhoneNumberDeleteParams as PhoneNumberDeleteParams,
   };
 }
