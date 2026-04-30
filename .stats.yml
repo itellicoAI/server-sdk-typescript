@@ -1,4 +1,4 @@
 configured_endpoints: 25
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/itellicoai%2Fitellicoai-47d54980629f7e3be7ddfd7aefe94e39ea8ebc4e5da2818783b5cafc839c7401.yml
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/itellicoai/itellicoai-47d54980629f7e3be7ddfd7aefe94e39ea8ebc4e5da2818783b5cafc839c7401.yml
 openapi_spec_hash: d8b701a6ba91c1e5352e4231d6c499d2
 config_hash: 30c216a4d4b9df883a597852cd39fe96
