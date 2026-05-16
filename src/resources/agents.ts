@@ -671,9 +671,14 @@ export interface AgentCreateParams {
 
   /**
    * Transcriber (speech-to-text) configuration for the agent. Defines which
-   * transcriber provider to use (Azure, Deepgram) and language settings.
+   * transcriber provider to use (Azure, Deepgram, Cartesia, ElevenLabs) and language
+   * settings.
    */
-  transcriber: AzureTranscriber | DeepgramTranscriber;
+  transcriber:
+    | AzureTranscriber
+    | DeepgramTranscriber
+    | AgentCreateParams.CartesiaTranscriberSchema
+    | AgentCreateParams.ElevenLabsTranscriberSchema;
 
   /**
    * Voice (text-to-speech) configuration for the agent. Defines which provider and
@@ -852,6 +857,143 @@ export namespace AgentCreateParams {
      * Temperature for the model. Default is 0 to leverage caching for lower latency.
      */
     temperature?: number | null;
+  }
+
+  /**
+   * Cartesia-specific transcriber configuration.
+   */
+  export interface CartesiaTranscriberSchema {
+    /**
+     * Language for transcription (ISO-639-1 code; defaults to Cartesia's provider
+     * default)
+     */
+    language?:
+      | 'en'
+      | 'zh'
+      | 'de'
+      | 'es'
+      | 'ru'
+      | 'ko'
+      | 'fr'
+      | 'ja'
+      | 'pt'
+      | 'tr'
+      | 'pl'
+      | 'ca'
+      | 'nl'
+      | 'ar'
+      | 'sv'
+      | 'it'
+      | 'id'
+      | 'hi'
+      | 'fi'
+      | 'vi'
+      | 'he'
+      | 'uk'
+      | 'el'
+      | 'ms'
+      | 'cs'
+      | 'ro'
+      | 'da'
+      | 'hu'
+      | 'ta'
+      | 'no'
+      | 'th'
+      | 'ur'
+      | 'hr'
+      | 'bg'
+      | 'lt'
+      | 'la'
+      | 'mi'
+      | 'ml'
+      | 'cy'
+      | 'sk'
+      | 'te'
+      | 'fa'
+      | 'lv'
+      | 'bn'
+      | 'sr'
+      | 'az'
+      | 'sl'
+      | 'kn'
+      | 'et'
+      | 'mk'
+      | 'br'
+      | 'eu'
+      | 'is'
+      | 'hy'
+      | 'ne'
+      | 'mn'
+      | 'bs'
+      | 'kk'
+      | 'sq'
+      | 'sw'
+      | 'gl'
+      | 'mr'
+      | 'pa'
+      | 'si'
+      | 'km'
+      | 'sn'
+      | 'yo'
+      | 'so'
+      | 'af'
+      | 'oc'
+      | 'ka'
+      | 'be'
+      | 'tg'
+      | 'sd'
+      | 'gu'
+      | 'am'
+      | 'yi'
+      | 'lo'
+      | 'uz'
+      | 'fo'
+      | 'ht'
+      | 'ps'
+      | 'tk'
+      | 'nn'
+      | 'mt'
+      | 'sa'
+      | 'lb'
+      | 'my'
+      | 'bo'
+      | 'tl'
+      | 'mg'
+      | 'as'
+      | 'tt'
+      | 'haw'
+      | 'ln'
+      | 'ha'
+      | 'ba'
+      | 'jw'
+      | 'su'
+      | 'yue'
+      | null;
+
+    /**
+     * Cartesia Ink Whisper streaming STT model
+     */
+    model?: 'ink-whisper' | null;
+
+    provider?: 'cartesia';
+  }
+
+  /**
+   * ElevenLabs Scribe realtime transcriber configuration.
+   */
+  export interface ElevenLabsTranscriberSchema {
+    /**
+     * Language for transcription. Scribe accepts ISO-639-1 or ISO-639-3 codes; use the
+     * catalog for supported values.
+     */
+    language?: string | null;
+
+    /**
+     * ElevenLabs Scribe v2 Realtime streaming STT model
+     */
+    model?: 'scribe_v2_realtime' | null;
+
+    provider?: 'elevenlabs';
   }
 
   /**
@@ -1046,7 +1188,12 @@ export interface AgentUpdateParams {
    * Body param: Transcriber (speech-to-text) configuration for the agent. Partial
    * updates allowed.
    */
-  transcriber?: AzureTranscriber | DeepgramTranscriber | null;
+  transcriber?:
+    | AzureTranscriber
+    | DeepgramTranscriber
+    | AgentUpdateParams.CartesiaTranscriberSchema
+    | AgentUpdateParams.ElevenLabsTranscriberSchema
+    | null;
 
   /**
    * Body param: Text-to-speech configuration for the agent. Partial updates allowed.
@@ -1057,6 +1204,145 @@ export interface AgentUpdateParams {
    * Body param: Agent volume settings for audio output control.
    */
   volume?: Volume | null;
+}
+
+export namespace AgentUpdateParams {
+  /**
+   * Cartesia-specific transcriber configuration.
+   */
+  export interface CartesiaTranscriberSchema {
+    /**
+     * Language for transcription (ISO-639-1 code; defaults to Cartesia's provider
+     * default)
+     */
+    language?:
+      | 'en'
+      | 'zh'
+      | 'de'
+      | 'es'
+      | 'ru'
+      | 'ko'
+      | 'fr'
+      | 'ja'
+      | 'pt'
+      | 'tr'
+      | 'pl'
+      | 'ca'
+      | 'nl'
+      | 'ar'
+      | 'sv'
+      | 'it'
+      | 'id'
+      | 'hi'
+      | 'fi'
+      | 'vi'
+      | 'he'
+      | 'uk'
+      | 'el'
+      | 'ms'
+      | 'cs'
+      | 'ro'
+      | 'da'
+      | 'hu'
+      | 'ta'
+      | 'no'
+      | 'th'
+      | 'ur'
+      | 'hr'
+      | 'bg'
+      | 'lt'
+      | 'la'
+      | 'mi'
+      | 'ml'
+      | 'cy'
+      | 'sk'
+      | 'te'
+      | 'fa'
+      | 'lv'
+      | 'bn'
+      | 'sr'
+      | 'az'
+      | 'sl'
+      | 'kn'
+      | 'et'
+      | 'mk'
+      | 'br'
+      | 'eu'
+      | 'is'
+      | 'hy'
+      | 'ne'
+      | 'mn'
+      | 'bs'
+      | 'kk'
+      | 'sq'
+      | 'sw'
+      | 'gl'
+      | 'mr'
+      | 'pa'
+      | 'si'
+      | 'km'
+      | 'sn'
+      | 'yo'
+      | 'so'
+      | 'af'
+      | 'oc'
+      | 'ka'
+      | 'be'
+      | 'tg'
+      | 'sd'
+      | 'gu'
+      | 'am'
+      | 'yi'
+      | 'lo'
+      | 'uz'
+      | 'fo'
+      | 'ht'
+      | 'ps'
+      | 'tk'
+      | 'nn'
+      | 'mt'
+      | 'sa'
+      | 'lb'
+      | 'my'
+      | 'bo'
+      | 'tl'
+      | 'mg'
+      | 'as'
+      | 'tt'
+      | 'haw'
+      | 'ln'
+      | 'ha'
+      | 'ba'
+      | 'jw'
+      | 'su'
+      | 'yue'
+      | null;
+
+    /**
+     * Cartesia Ink Whisper streaming STT model
+     */
+    model?: 'ink-whisper' | null;
+
+    provider?: 'cartesia';
+  }
+
+  /**
+   * ElevenLabs Scribe realtime transcriber configuration.
+   */
+  export interface ElevenLabsTranscriberSchema {
+    /**
+     * Language for transcription. Scribe accepts ISO-639-1 or ISO-639-3 codes; use the
+     * catalog for supported values.
+     */
+    language?: string | null;
+
+    /**
+     * ElevenLabs Scribe v2 Realtime streaming STT model
+     */
+    model?: 'scribe_v2_realtime' | null;
+
+    provider?: 'elevenlabs';
+  }
 }
 
 export interface AgentListParams {
