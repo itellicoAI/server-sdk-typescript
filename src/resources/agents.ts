@@ -22,7 +22,7 @@ export class Agents extends APIResource {
    *       model: 'gpt-5-mini',
    *       provider: 'azure_openai',
    *     },
-   *     transcriber: { provider: 'deepgram' },
+   *     transcriber: { provider: 'soniox' },
    *     voice: {
    *       voice_id: 'pMsXgVXv3BLzUgSXRplE',
    *       provider: 'elevenlabs',
@@ -678,7 +678,8 @@ export interface AgentCreateParams {
     | AzureTranscriber
     | DeepgramTranscriber
     | AgentCreateParams.CartesiaTranscriberSchema
-    | AgentCreateParams.ElevenLabsTranscriberSchema;
+    | AgentCreateParams.ElevenLabsTranscriberSchema
+    | AgentCreateParams.SonioxTranscriberSchema;
 
   /**
    * Voice (text-to-speech) configuration for the agent. Defines which provider and
@@ -997,6 +998,69 @@ export namespace AgentCreateParams {
   }
 
   /**
+   * Soniox realtime transcriber configuration.
+   */
+  export interface SonioxTranscriberSchema {
+    /**
+     * Soniox context object/string for domain terms and expected text.
+     */
+    context?: { [key: string]: unknown } | string | null;
+
+    /**
+     * Annotate tokens with detected language IDs.
+     */
+    enable_language_identification?: boolean | null;
+
+    /**
+     * Annotate tokens with speaker IDs.
+     */
+    enable_speaker_diarization?: boolean | null;
+
+    /**
+     * Use the Soniox EU realtime endpoint when true.
+     */
+    eu_hosted?: boolean | null;
+
+    /**
+     * Recognition terms to bias transcription. Mapped to Soniox context.terms by the
+     * worker runtime.
+     */
+    keywords?: Array<string> | null;
+
+    /**
+     * Optional primary language hint. Soniox can auto-detect without this.
+     */
+    language?: string | null;
+
+    /**
+     * Soniox language hints, using ISO language codes such as 'de'.
+     */
+    language_hints?: Array<string> | null;
+
+    /**
+     * Restrict recognition to the configured language hints.
+     */
+    language_hints_strict?: boolean | null;
+
+    /**
+     * Optional list of language hints for Soniox automatic detection.
+     */
+    languages?: Array<string> | null;
+
+    /**
+     * Maximum endpoint detection delay in milliseconds.
+     */
+    max_endpoint_delay_ms?: number | null;
+
+    /**
+     * Soniox v4 realtime streaming STT model
+     */
+    model?: 'stt-rt-v4' | null;
+
+    provider?: 'soniox';
+  }
+
+  /**
    * Azure-specific voice configuration.
    */
   export interface AzureVoiceSchema {
@@ -1193,6 +1257,7 @@ export interface AgentUpdateParams {
     | DeepgramTranscriber
     | AgentUpdateParams.CartesiaTranscriberSchema
     | AgentUpdateParams.ElevenLabsTranscriberSchema
+    | AgentUpdateParams.SonioxTranscriberSchema
     | null;
 
   /**
@@ -1342,6 +1407,69 @@ export namespace AgentUpdateParams {
     model?: 'scribe_v2_realtime' | null;
 
     provider?: 'elevenlabs';
+  }
+
+  /**
+   * Soniox realtime transcriber configuration.
+   */
+  export interface SonioxTranscriberSchema {
+    /**
+     * Soniox context object/string for domain terms and expected text.
+     */
+    context?: { [key: string]: unknown } | string | null;
+
+    /**
+     * Annotate tokens with detected language IDs.
+     */
+    enable_language_identification?: boolean | null;
+
+    /**
+     * Annotate tokens with speaker IDs.
+     */
+    enable_speaker_diarization?: boolean | null;
+
+    /**
+     * Use the Soniox EU realtime endpoint when true.
+     */
+    eu_hosted?: boolean | null;
+
+    /**
+     * Recognition terms to bias transcription. Mapped to Soniox context.terms by the
+     * worker runtime.
+     */
+    keywords?: Array<string> | null;
+
+    /**
+     * Optional primary language hint. Soniox can auto-detect without this.
+     */
+    language?: string | null;
+
+    /**
+     * Soniox language hints, using ISO language codes such as 'de'.
+     */
+    language_hints?: Array<string> | null;
+
+    /**
+     * Restrict recognition to the configured language hints.
+     */
+    language_hints_strict?: boolean | null;
+
+    /**
+     * Optional list of language hints for Soniox automatic detection.
+     */
+    languages?: Array<string> | null;
+
+    /**
+     * Maximum endpoint detection delay in milliseconds.
+     */
+    max_endpoint_delay_ms?: number | null;
+
+    /**
+     * Soniox v4 realtime streaming STT model
+     */
+    model?: 'stt-rt-v4' | null;
+
+    provider?: 'soniox';
   }
 }
 

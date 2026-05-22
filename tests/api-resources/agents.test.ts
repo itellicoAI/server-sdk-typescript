@@ -12,7 +12,7 @@ describe('resource agents', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.agents.create('account_id', {
       model: { model: 'gpt-5-mini', provider: 'azure_openai' },
-      transcriber: { provider: 'deepgram' },
+      transcriber: { provider: 'soniox' },
       voice: { voice_id: 'pMsXgVXv3BLzUgSXRplE', provider: 'elevenlabs' },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -34,11 +34,18 @@ describe('resource agents', () => {
         temperature: 0.7,
       },
       transcriber: {
+        context: { foo: 'bar' },
+        enable_language_identification: true,
+        enable_speaker_diarization: true,
+        eu_hosted: true,
         keywords: ['string'],
-        language: 'bg',
+        language: 'language',
+        language_hints: ['string'],
+        language_hints_strict: true,
         languages: ['string'],
-        model: 'flux-general-multi',
-        provider: 'deepgram',
+        max_endpoint_delay_ms: 500,
+        model: 'stt-rt-v4',
+        provider: 'soniox',
       },
       voice: {
         voice_id: 'pMsXgVXv3BLzUgSXRplE',
