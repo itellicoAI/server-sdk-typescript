@@ -44,7 +44,7 @@ describe('resource agents', () => {
         language_hints_strict: true,
         languages: ['string'],
         max_endpoint_delay_ms: 500,
-        model: 'stt-rt-v4',
+        model: 'stt-rt-v5',
         provider: 'soniox',
       },
       voice: {

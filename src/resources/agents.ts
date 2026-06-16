@@ -1053,9 +1053,9 @@ export namespace AgentCreateParams {
     max_endpoint_delay_ms?: number | null;
 
     /**
-     * Soniox v4 realtime streaming STT model
+     * Soniox realtime streaming STT model
      */
-    model?: 'stt-rt-v4' | null;
+    model?: 'stt-rt-v5' | 'stt-rt-v4' | null;
 
     provider?: 'soniox';
   }
@@ -1465,9 +1465,9 @@ export namespace AgentUpdateParams {
     max_endpoint_delay_ms?: number | null;
 
     /**
-     * Soniox v4 realtime streaming STT model
+     * Soniox realtime streaming STT model
      */
-    model?: 'stt-rt-v4' | null;
+    model?: 'stt-rt-v5' | 'stt-rt-v4' | null;
 
     provider?: 'soniox';
   }
