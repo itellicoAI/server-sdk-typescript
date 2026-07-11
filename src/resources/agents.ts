@@ -22,7 +22,7 @@ export class Agents extends APIResource {
    *       model: 'gpt-5-mini',
    *       provider: 'azure_openai',
    *     },
-   *     transcriber: { provider: 'deepgram' },
+   *     transcriber: { provider: 'soniox' },
    *     voice: {
    *       voice_id: 'pMsXgVXv3BLzUgSXRplE',
    *       provider: 'elevenlabs',
@@ -490,9 +490,18 @@ export interface DeepgramTranscriber {
     | null;
 
   /**
+   * Optional Deepgram Flux multilingual language hints. Used with
+   * model='flux-general-multi'; omit or send an empty list to let Flux auto-detect
+   * across all supported languages.
+   */
+  languages?: Array<string> | null;
+
+  /**
    * Deepgram model to use (matches our YAML configuration)
    */
   model?:
+    | 'flux-general-en'
+    | 'flux-general-multi'
     | 'nova-3:general'
     | 'nova-3:medical'
     | 'nova-2:general'
@@ -662,9 +671,15 @@ export interface AgentCreateParams {
 
   /**
    * Transcriber (speech-to-text) configuration for the agent. Defines which
-   * transcriber provider to use (Azure, Deepgram) and language settings.
+   * transcriber provider to use (Azure, Deepgram, Cartesia, ElevenLabs) and language
+   * settings.
    */
-  transcriber: AzureTranscriber | DeepgramTranscriber;
+  transcriber:
+    | AzureTranscriber
+    | DeepgramTranscriber
+    | AgentCreateParams.CartesiaTranscriberSchema
+    | AgentCreateParams.ElevenLabsTranscriberSchema
+    | AgentCreateParams.SonioxTranscriberSchema;
 
   /**
    * Voice (text-to-speech) configuration for the agent. Defines which provider and
@@ -829,7 +844,7 @@ export namespace AgentCreateParams {
     /**
      * The Anthropic model to use.
      */
-    model: 'claude-sonnet-4-20250514' | 'claude-3-7-sonnet-20250219' | 'claude-3-5-haiku-20241022';
+    model: string;
 
     /**
      * Max number of tokens the agent will be allowed to generate in each turn. Default
@@ -843,6 +858,206 @@ export namespace AgentCreateParams {
      * Temperature for the model. Default is 0 to leverage caching for lower latency.
      */
     temperature?: number | null;
+  }
+
+  /**
+   * Cartesia-specific transcriber configuration.
+   */
+  export interface CartesiaTranscriberSchema {
+    /**
+     * Language for transcription (ISO-639-1 code; defaults to Cartesia's provider
+     * default)
+     */
+    language?:
+      | 'en'
+      | 'zh'
+      | 'de'
+      | 'es'
+      | 'ru'
+      | 'ko'
+      | 'fr'
+      | 'ja'
+      | 'pt'
+      | 'tr'
+      | 'pl'
+      | 'ca'
+      | 'nl'
+      | 'ar'
+      | 'sv'
+      | 'it'
+      | 'id'
+      | 'hi'
+      | 'fi'
+      | 'vi'
+      | 'he'
+      | 'uk'
+      | 'el'
+      | 'ms'
+      | 'cs'
+      | 'ro'
+      | 'da'
+      | 'hu'
+      | 'ta'
+      | 'no'
+      | 'th'
+      | 'ur'
+      | 'hr'
+      | 'bg'
+      | 'lt'
+      | 'la'
+      | 'mi'
+      | 'ml'
+      | 'cy'
+      | 'sk'
+      | 'te'
+      | 'fa'
+      | 'lv'
+      | 'bn'
+      | 'sr'
+      | 'az'
+      | 'sl'
+      | 'kn'
+      | 'et'
+      | 'mk'
+      | 'br'
+      | 'eu'
+      | 'is'
+      | 'hy'
+      | 'ne'
+      | 'mn'
+      | 'bs'
+      | 'kk'
+      | 'sq'
+      | 'sw'
+      | 'gl'
+      | 'mr'
+      | 'pa'
+      | 'si'
+      | 'km'
+      | 'sn'
+      | 'yo'
+      | 'so'
+      | 'af'
+      | 'oc'
+      | 'ka'
+      | 'be'
+      | 'tg'
+      | 'sd'
+      | 'gu'
+      | 'am'
+      | 'yi'
+      | 'lo'
+      | 'uz'
+      | 'fo'
+      | 'ht'
+      | 'ps'
+      | 'tk'
+      | 'nn'
+      | 'mt'
+      | 'sa'
+      | 'lb'
+      | 'my'
+      | 'bo'
+      | 'tl'
+      | 'mg'
+      | 'as'
+      | 'tt'
+      | 'haw'
+      | 'ln'
+      | 'ha'
+      | 'ba'
+      | 'jw'
+      | 'su'
+      | 'yue'
+      | null;
+
+    /**
+     * Cartesia Ink Whisper streaming STT model
+     */
+    model?: 'ink-whisper' | null;
+
+    provider?: 'cartesia';
+  }
+
+  /**
+   * ElevenLabs Scribe realtime transcriber configuration.
+   */
+  export interface ElevenLabsTranscriberSchema {
+    /**
+     * Language for transcription. Scribe accepts ISO-639-1 or ISO-639-3 codes; use the
+     * catalog for supported values.
+     */
+    language?: string | null;
+
+    /**
+     * ElevenLabs Scribe v2 Realtime streaming STT model
+     */
+    model?: 'scribe_v2_realtime' | null;
+
+    provider?: 'elevenlabs';
+  }
+
+  /**
+   * Soniox realtime transcriber configuration.
+   */
+  export interface SonioxTranscriberSchema {
+    /**
+     * Soniox context object/string for domain terms and expected text.
+     */
+    context?: { [key: string]: unknown } | string | null;
+
+    /**
+     * Annotate tokens with detected language IDs.
+     */
+    enable_language_identification?: boolean | null;
+
+    /**
+     * Annotate tokens with speaker IDs.
+     */
+    enable_speaker_diarization?: boolean | null;
+
+    /**
+     * Use the Soniox EU realtime endpoint when true.
+     */
+    eu_hosted?: boolean | null;
+
+    /**
+     * Recognition terms to bias transcription. Mapped to Soniox context.terms by the
+     * worker runtime.
+     */
+    keywords?: Array<string> | null;
+
+    /**
+     * Optional primary language hint. Soniox can auto-detect without this.
+     */
+    language?: string | null;
+
+    /**
+     * Soniox language hints, using ISO language codes such as 'de'.
+     */
+    language_hints?: Array<string> | null;
+
+    /**
+     * Restrict recognition to the configured language hints.
+     */
+    language_hints_strict?: boolean | null;
+
+    /**
+     * Optional list of language hints for Soniox automatic detection.
+     */
+    languages?: Array<string> | null;
+
+    /**
+     * Maximum endpoint detection delay in milliseconds.
+     */
+    max_endpoint_delay_ms?: number | null;
+
+    /**
+     * Soniox realtime streaming STT model
+     */
+    model?: 'stt-rt-v5' | 'stt-rt-v4' | null;
+
+    provider?: 'soniox';
   }
 
   /**
@@ -1037,7 +1252,13 @@ export interface AgentUpdateParams {
    * Body param: Transcriber (speech-to-text) configuration for the agent. Partial
    * updates allowed.
    */
-  transcriber?: AzureTranscriber | DeepgramTranscriber | null;
+  transcriber?:
+    | AzureTranscriber
+    | DeepgramTranscriber
+    | AgentUpdateParams.CartesiaTranscriberSchema
+    | AgentUpdateParams.ElevenLabsTranscriberSchema
+    | AgentUpdateParams.SonioxTranscriberSchema
+    | null;
 
   /**
    * Body param: Text-to-speech configuration for the agent. Partial updates allowed.
@@ -1048,6 +1269,208 @@ export interface AgentUpdateParams {
    * Body param: Agent volume settings for audio output control.
    */
   volume?: Volume | null;
+}
+
+export namespace AgentUpdateParams {
+  /**
+   * Cartesia-specific transcriber configuration.
+   */
+  export interface CartesiaTranscriberSchema {
+    /**
+     * Language for transcription (ISO-639-1 code; defaults to Cartesia's provider
+     * default)
+     */
+    language?:
+      | 'en'
+      | 'zh'
+      | 'de'
+      | 'es'
+      | 'ru'
+      | 'ko'
+      | 'fr'
+      | 'ja'
+      | 'pt'
+      | 'tr'
+      | 'pl'
+      | 'ca'
+      | 'nl'
+      | 'ar'
+      | 'sv'
+      | 'it'
+      | 'id'
+      | 'hi'
+      | 'fi'
+      | 'vi'
+      | 'he'
+      | 'uk'
+      | 'el'
+      | 'ms'
+      | 'cs'
+      | 'ro'
+      | 'da'
+      | 'hu'
+      | 'ta'
+      | 'no'
+      | 'th'
+      | 'ur'
+      | 'hr'
+      | 'bg'
+      | 'lt'
+      | 'la'
+      | 'mi'
+      | 'ml'
+      | 'cy'
+      | 'sk'
+      | 'te'
+      | 'fa'
+      | 'lv'
+      | 'bn'
+      | 'sr'
+      | 'az'
+      | 'sl'
+      | 'kn'
+      | 'et'
+      | 'mk'
+      | 'br'
+      | 'eu'
+      | 'is'
+      | 'hy'
+      | 'ne'
+      | 'mn'
+      | 'bs'
+      | 'kk'
+      | 'sq'
+      | 'sw'
+      | 'gl'
+      | 'mr'
+      | 'pa'
+      | 'si'
+      | 'km'
+      | 'sn'
+      | 'yo'
+      | 'so'
+      | 'af'
+      | 'oc'
+      | 'ka'
+      | 'be'
+      | 'tg'
+      | 'sd'
+      | 'gu'
+      | 'am'
+      | 'yi'
+      | 'lo'
+      | 'uz'
+      | 'fo'
+      | 'ht'
+      | 'ps'
+      | 'tk'
+      | 'nn'
+      | 'mt'
+      | 'sa'
+      | 'lb'
+      | 'my'
+      | 'bo'
+      | 'tl'
+      | 'mg'
+      | 'as'
+      | 'tt'
+      | 'haw'
+      | 'ln'
+      | 'ha'
+      | 'ba'
+      | 'jw'
+      | 'su'
+      | 'yue'
+      | null;
+
+    /**
+     * Cartesia Ink Whisper streaming STT model
+     */
+    model?: 'ink-whisper' | null;
+
+    provider?: 'cartesia';
+  }
+
+  /**
+   * ElevenLabs Scribe realtime transcriber configuration.
+   */
+  export interface ElevenLabsTranscriberSchema {
+    /**
+     * Language for transcription. Scribe accepts ISO-639-1 or ISO-639-3 codes; use the
+     * catalog for supported values.
+     */
+    language?: string | null;
+
+    /**
+     * ElevenLabs Scribe v2 Realtime streaming STT model
+     */
+    model?: 'scribe_v2_realtime' | null;
+
+    provider?: 'elevenlabs';
+  }
+
+  /**
+   * Soniox realtime transcriber configuration.
+   */
+  export interface SonioxTranscriberSchema {
+    /**
+     * Soniox context object/string for domain terms and expected text.
+     */
+    context?: { [key: string]: unknown } | string | null;
+
+    /**
+     * Annotate tokens with detected language IDs.
+     */
+    enable_language_identification?: boolean | null;
+
+    /**
+     * Annotate tokens with speaker IDs.
+     */
+    enable_speaker_diarization?: boolean | null;
+
+    /**
+     * Use the Soniox EU realtime endpoint when true.
+     */
+    eu_hosted?: boolean | null;
+
+    /**
+     * Recognition terms to bias transcription. Mapped to Soniox context.terms by the
+     * worker runtime.
+     */
+    keywords?: Array<string> | null;
+
+    /**
+     * Optional primary language hint. Soniox can auto-detect without this.
+     */
+    language?: string | null;
+
+    /**
+     * Soniox language hints, using ISO language codes such as 'de'.
+     */
+    language_hints?: Array<string> | null;
+
+    /**
+     * Restrict recognition to the configured language hints.
+     */
+    language_hints_strict?: boolean | null;
+
+    /**
+     * Optional list of language hints for Soniox automatic detection.
+     */
+    languages?: Array<string> | null;
+
+    /**
+     * Maximum endpoint detection delay in milliseconds.
+     */
+    max_endpoint_delay_ms?: number | null;
+
+    /**
+     * Soniox realtime streaming STT model
+     */
+    model?: 'stt-rt-v5' | 'stt-rt-v4' | null;
+
+    provider?: 'soniox';
+  }
 }
 
 export interface AgentListParams {

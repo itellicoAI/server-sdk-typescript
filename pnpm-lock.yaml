@@ -11,8 +11,8 @@ importers:
   .:
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: ^0.17.0
-        version: 0.17.0
+        specifier: ^0.18.0
+        version: 0.18.4
       '@swc/core':
         specifier: ^1.3.102
         version: 1.4.16
@@ -34,9 +34,6 @@ importers:
       eslint:
         specifier: ^9.39.1
         version: 9.39.1
-      eslint-plugin-prettier:
-        specifier: ^5.4.1
-        version: 5.4.1(eslint@9.39.1)(prettier@3.1.1)
       eslint-plugin-unused-imports:
         specifier: ^4.1.4
         version: 4.1.4(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.39.1)(typescript@5.8.3))(eslint@9.39.1)(typescript@5.8.3))(eslint@9.39.1)
@@ -59,8 +56,8 @@ importers:
         specifier: ^10.5.0
         version: 10.7.0(@swc/core@1.4.16)(@types/node@20.19.11)(typescript@5.8.3)
       tsc-multi:
-        specifier: https://github.com/stainless-api/tsc-multi/releases/download/v1.1.9/tsc-multi.tgz
-        version: https://github.com/stainless-api/tsc-multi/releases/download/v1.1.9/tsc-multi.tgz(typescript@5.8.3)
+        specifier: https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz
+        version: https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz(typescript@5.8.3)
       tsconfig-paths:
         specifier: ^4.0.0
         version: 4.2.0
@@ -81,20 +78,20 @@ packages:
         integrity: sha512-Jh15/qVmrLGhkKJBdXlK1+9tY4lZruYjsgkDFj08ZmDiWVBLJcqkok7Z0/R0In+i1rScBpJlSvrTS2Lm41Pbnw==,
       }
 
-  '@arethetypeswrong/cli@0.17.0':
+  '@arethetypeswrong/cli@0.18.4':
     resolution:
       {
-        integrity: sha512-xSMW7bfzVWpYw5JFgZqBXqr6PdR0/REmn3DkxCES5N0JTcB0CVgbIynJCvKBFmXaPc3hzmmTrb7+yPDRoOSZdA==,
+        integrity: sha512-kNWo6LTzGAuLYPpJ7Sgo63whSUeeSuKMlYx6IBgzs4ONEG807gW4hSSENvpeCHzO2H2wIzG5EFl0OKBbqGBAyA==,
       }
-    engines: { node: '>=18' }
+    engines: { node: '>=20' }
     hasBin: true
 
-  '@arethetypeswrong/core@0.17.0':
+  '@arethetypeswrong/core@0.18.4':
     resolution:
       {
-        integrity: sha512-FHyhFizXNetigTVsIhqXKGYLpazPS5YNojEPpZEUcBPt9wVvoEbNIvG+hybuBR+pjlRcbyuqhukHZm1fr+bDgA==,
+        integrity: sha512-M5F0ePyN6h2Z6XxRiyIPqjGbltotXLjR0CKA0uKspsDu0QmgTNYvRb4RSQPMUs2ZXZHCCYpbaZbFbYOXLxCjUA==,
       }
-    engines: { node: '>=18' }
+    engines: { node: '>=20' }
 
   '@babel/code-frame@7.28.6':
     resolution:
@@ -364,6 +361,12 @@ packages:
     resolution:
       {
         integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==,
+      }
+
+  '@braidai/lang@1.1.2':
+    resolution:
+      {
+        integrity: sha512-qBcknbBufNHlui137Hft8xauQMTZDKdophmLFv05r2eNmdIv/MlPuP4TdUknHG68UdWLgVZwgxVe735HzJNIwA==,
       }
 
   '@colors/colors@1.5.0':
@@ -668,6 +671,12 @@ packages:
         integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==,
       }
 
+  '@loaderkit/resolve@1.0.6':
+    resolution:
+      {
+        integrity: sha512-G8FdIoF5CypfwmD9rl8BXod5HDn8JqB0CCNBXDTaRZ+yRYhARrrSToX1zg1zy9jX3zLqigsELwhT4gNtkdQAUg==,
+      }
+
   '@nodelib/fs.scandir@2.1.5':
     resolution:
       {
@@ -688,13 +697,6 @@ packages:
         integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==,
       }
     engines: { node: '>= 8' }
-
-  '@pkgr/core@0.2.4':
-    resolution:
-      {
-        integrity: sha512-ROFF39F6ZrnzSUEmQQZUar0Jt4xVoP9WnDRdWwF4NNcXs3xBTLgBUDoOwW141y1jP+S8nahIbdxbFC7IShw9Iw==,
-      }
-    engines: { node: ^12.20.0 || ^14.18.0 || >=16.0.0 }
 
   '@sinclair/typebox@0.27.8':
     resolution:
@@ -1534,23 +1536,6 @@ packages:
       }
     engines: { node: '>=10' }
 
-  eslint-plugin-prettier@5.4.1:
-    resolution:
-      {
-        integrity: sha512-9dF+KuU/Ilkq27A8idRP7N2DH8iUR6qXcjF3FR2wETY21PZdBrIjwCau8oboyGj9b7etWmTGEeM8e7oOed6ZWg==,
-      }
-    engines: { node: ^14.18.0 || >=16.0.0 }
-    peerDependencies:
-      '@types/eslint': '>=8.0.0'
-      eslint: '>=8.0.0'
-      eslint-config-prettier: '>= 7.0.0 <10.0.0 || >=10.1.0'
-      prettier: '>=3.0.0'
-    peerDependenciesMeta:
-      '@types/eslint':
-        optional: true
-      eslint-config-prettier:
-        optional: true
-
   eslint-plugin-unused-imports@4.1.4:
     resolution:
       {
@@ -1674,12 +1659,6 @@ packages:
         integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==,
       }
 
-  fast-diff@1.3.0:
-    resolution:
-      {
-        integrity: sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==,
-      }
-
   fast-glob@3.3.2:
     resolution:
       {
@@ -1711,10 +1690,10 @@ packages:
         integrity: sha512-p5161BqbuCaSnB8jIbzQHOlpgsPmK5rJVDfDKO91Axs5NC1uu3HRQm6wt9cd9/+GtQQIO53JdGXXoyDpTAsgYA==,
       }
 
-  fflate@0.8.2:
+  fflate@0.8.3:
     resolution:
       {
-        integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==,
+        integrity: sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==,
       }
 
   file-entry-cache@8.0.0:
@@ -2399,11 +2378,12 @@ packages:
         integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==,
       }
 
-  lru-cache@10.4.3:
+  lru-cache@11.5.2:
     resolution:
       {
-        integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==,
+        integrity: sha512-4pfM1Ff0x50o0tQwb5ucw/RzNyD0/YJME6IVcStalZuMWxdt3sR3huStTtxz4PUmvZfRguvDejasvQ2kifR11g==,
       }
+    engines: { node: 20 || >=22 }
 
   lru-cache@5.1.1:
     resolution:
@@ -2742,13 +2722,6 @@ packages:
       }
     engines: { node: '>= 0.8.0' }
 
-  prettier-linter-helpers@1.0.0:
-    resolution:
-      {
-        integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==,
-      }
-    engines: { node: '>=6.0.0' }
-
   prettier@3.1.1:
     resolution:
       {
@@ -2890,14 +2863,6 @@ packages:
       {
         integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==,
       }
-    hasBin: true
-
-  semver@7.7.1:
-    resolution:
-      {
-        integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==,
-      }
-    engines: { node: '>=10' }
     hasBin: true
 
   semver@7.7.3:
@@ -3070,13 +3035,6 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
-  synckit@0.11.8:
-    resolution:
-      {
-        integrity: sha512-+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==,
-      }
-    engines: { node: ^14.18.0 || >=16.0.0 }
-
   test-exclude@6.0.0:
     resolution:
       {
@@ -3166,13 +3124,13 @@ packages:
       '@swc/wasm':
         optional: true
 
-  tsc-multi@https://github.com/stainless-api/tsc-multi/releases/download/v1.1.9/tsc-multi.tgz:
+  tsc-multi@https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz:
     resolution:
       {
-        integrity: sha512-tWyCXnx0WqCkVlo5s+4KMj7HC0/0YrCZY0PustUwX9F2lNwd8Kp07q/Q56uGvV9q80XaSDrhy0YqBmrX5TDNpQ==,
-        tarball: https://github.com/stainless-api/tsc-multi/releases/download/v1.1.9/tsc-multi.tgz,
+        integrity: sha512-LrjLRdfDnJ6UcZPSsxxY8QDnZmS3ZpPyvzgjUlNMjjRoTAUVqeL+IWrIzEU3Z+CwVrpVI97PePRLenEfCtR/UQ==,
+        tarball: https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz,
       }
-    version: 1.1.9
+    version: 1.1.11
     engines: { node: '>=14' }
     hasBin: true
     peerDependencies:
@@ -3412,23 +3370,24 @@ packages:
 snapshots:
   '@andrewbranch/untar.js@1.0.3': {}
 
-  '@arethetypeswrong/cli@0.17.0':
+  '@arethetypeswrong/cli@0.18.4':
     dependencies:
-      '@arethetypeswrong/core': 0.17.0
+      '@arethetypeswrong/core': 0.18.4
       chalk: 4.1.2
       cli-table3: 0.6.5
       commander: 10.0.1
       marked: 9.1.6
       marked-terminal: 7.2.1(marked@9.1.6)
-      semver: 7.7.1
+      semver: 7.7.3
 
-  '@arethetypeswrong/core@0.17.0':
+  '@arethetypeswrong/core@0.18.4':
     dependencies:
       '@andrewbranch/untar.js': 1.0.3
+      '@loaderkit/resolve': 1.0.6
       cjs-module-lexer: 1.4.1
-      fflate: 0.8.2
-      lru-cache: 10.4.3
-      semver: 7.7.1
+      fflate: 0.8.3
+      lru-cache: 11.5.2
+      semver: 7.7.3
       typescript: 5.6.1-rc
       validate-npm-package-name: 5.0.1
 
@@ -3620,6 +3579,8 @@ snapshots:
       '@babel/helper-validator-identifier': 7.28.5
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@braidai/lang@1.1.2': {}
 
   '@colors/colors@1.5.0':
     optional: true
@@ -3896,6 +3857,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  '@loaderkit/resolve@1.0.6':
+    dependencies:
+      '@braidai/lang': 1.1.2
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -3907,8 +3872,6 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
-
-  '@pkgr/core@0.2.4': {}
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -4391,13 +4354,6 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-plugin-prettier@5.4.1(eslint@9.39.1)(prettier@3.1.1):
-    dependencies:
-      eslint: 9.39.1
-      prettier: 3.1.1
-      prettier-linter-helpers: 1.0.0
-      synckit: 0.11.8
-
   eslint-plugin-unused-imports@4.1.4(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.39.1)(typescript@5.8.3))(eslint@9.39.1)(typescript@5.8.3))(eslint@9.39.1):
     dependencies:
       eslint: 9.39.1
@@ -4498,8 +4454,6 @@ snapshots:
 
   fast-deep-equal@3.1.3: {}
 
-  fast-diff@1.3.0: {}
-
   fast-glob@3.3.2:
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -4520,7 +4474,7 @@ snapshots:
     dependencies:
       bser: 2.1.1
 
-  fflate@0.8.2: {}
+  fflate@0.8.3: {}
 
   file-entry-cache@8.0.0:
     dependencies:
@@ -4967,7 +4921,7 @@ snapshots:
       jest-util: 29.7.0
       natural-compare: 1.4.0
       pretty-format: 29.7.0
-      semver: 7.7.1
+      semver: 7.7.3
     transitivePeerDependencies:
       - supports-color
 
@@ -5071,7 +5025,7 @@ snapshots:
 
   lodash.merge@4.6.2: {}
 
-  lru-cache@10.4.3: {}
+  lru-cache@11.5.2: {}
 
   lru-cache@5.1.1:
     dependencies:
@@ -5245,10 +5199,6 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-linter-helpers@1.0.0:
-    dependencies:
-      fast-diff: 1.3.0
-
   prettier@3.1.1: {}
 
   pretty-format@29.7.0:
@@ -5315,8 +5265,6 @@ snapshots:
   safer-buffer@2.1.2: {}
 
   semver@6.3.1: {}
-
-  semver@7.7.1: {}
 
   semver@7.7.3: {}
 
@@ -5397,10 +5345,6 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  synckit@0.11.8:
-    dependencies:
-      '@pkgr/core': 0.2.4
-
   test-exclude@6.0.0:
     dependencies:
       '@istanbuljs/schema': 0.1.3
@@ -5465,7 +5409,7 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.4.16
 
-  tsc-multi@https://github.com/stainless-api/tsc-multi/releases/download/v1.1.9/tsc-multi.tgz(typescript@5.8.3):
+  tsc-multi@https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz(typescript@5.8.3):
     dependencies:
       debug: 4.4.1
       fast-glob: 3.3.2
@@ -5578,7 +5522,7 @@ snapshots:
   yargs@16.2.0:
     dependencies:
       cliui: 7.0.4
-      escalade: 3.1.1
+      escalade: 3.2.0
       get-caller-file: 2.0.5
       require-directory: 2.1.1
       string-width: 4.2.3

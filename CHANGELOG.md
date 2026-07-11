@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.2.0 (2026-07-11)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/itellicoAI/server-sdk-typescript/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** api update ([a59dc55](https://github.com/itellicoAI/server-sdk-typescript/commit/a59dc55d2d1adca45f51dbd3af3ec9d8d004f271))
+* **api:** api update ([1146b98](https://github.com/itellicoAI/server-sdk-typescript/commit/1146b98f0293e9b65b920df1186c62d9ce9167fd))
+* **api:** api update ([e97f204](https://github.com/itellicoAI/server-sdk-typescript/commit/e97f2040b6ad8791c3356d8c555f03181f1236f3))
+* **api:** api update ([ca72ebc](https://github.com/itellicoAI/server-sdk-typescript/commit/ca72ebccc2606d46048fc275d143861f5120cc5f))
+* **api:** api update ([c48abf1](https://github.com/itellicoAI/server-sdk-typescript/commit/c48abf164ed958d12b5b843092488e5eb49ab48f))
+* support setting headers via env ([0b64e4d](https://github.com/itellicoAI/server-sdk-typescript/commit/0b64e4d0ce69cac3bd7b0b1fe095c9f95a87b2ea))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([1d9dd35](https://github.com/itellicoAI/server-sdk-typescript/commit/1d9dd359ab218ec185c2a76d3aa496658ebe496f))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([9071be2](https://github.com/itellicoAI/server-sdk-typescript/commit/9071be2f6afc4f5f06b4a8680e20879246b97401))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([f460128](https://github.com/itellicoAI/server-sdk-typescript/commit/f460128bccb1fb23297ee5055ffb3d15bb1dd97b))
+* **formatter:** run prettier and eslint separately ([590e17f](https://github.com/itellicoAI/server-sdk-typescript/commit/590e17f3cdd66a42dd0ae66e85326828bcc512d2))
+* **internal:** codegen related update ([20ed927](https://github.com/itellicoAI/server-sdk-typescript/commit/20ed9276690dc068576d6837a365a2c37a6ad5d2))
+* **internal:** codegen related update ([59cd3c5](https://github.com/itellicoAI/server-sdk-typescript/commit/59cd3c5b72b0cd8e3a7789ced18fdd30309889ad))
+* **internal:** more robust bootstrap script ([4c683e9](https://github.com/itellicoAI/server-sdk-typescript/commit/4c683e94302c19221febc3330143ce16b86e3062))
+* redact api-key headers in debug logs ([d5297d3](https://github.com/itellicoAI/server-sdk-typescript/commit/d5297d332606e7081c0610f2b839eda3f4e6eb68))
+* **tests:** remove redundant File import ([dfe2cc8](https://github.com/itellicoAI/server-sdk-typescript/commit/dfe2cc8ed9c89194505f74fda2aa733915175475))
+
 ## 1.1.0 (2026-04-21)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/itellicoAI/server-sdk-typescript/compare/v1.0.0...v1.1.0)

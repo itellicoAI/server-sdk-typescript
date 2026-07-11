@@ -23,7 +23,7 @@ export class Providers extends APIResource {
   /**
    * List available transcriber models grouped by provider. Each provider entry
    * includes its code, name, EU-hosted flag, and models with id, name, description,
-   * and supported_languages (code/name).
+   * and supported_languages.
    */
   listTranscribers(
     accountID: string,
@@ -248,6 +248,11 @@ export namespace ProviderListTranscribersResponse {
          * Display label for the language
          */
         name: string;
+
+        /**
+         * Representative ISO 3166-1 alpha-2 country code for flag display
+         */
+        country_code?: string | null;
       }
     }
   }
